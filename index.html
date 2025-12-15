@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trương Tường Vi - Portfolio</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg-main: #fefae0;
+        --bg-card: #ffffff;
+        --border-color: #000000;
+        --accent-orange: #dda15e;
+        --accent-green: #606c38;
+        --accent-red: #ff6b6b;
+        --text-dark: #000000;
+        --text-gray: #333333;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-dark);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* Navigation */
+      .nav-bar {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--bg-card);
+        border: 4px solid var(--border-color);
+        border-radius: 50px;
+        padding: 10px 20px;
+        display: flex;
+        gap: 15px;
+        z-index: 1000;
+        box-shadow: 8px 8px 0 var(--border-color);
+      }
+
+      .nav-item {
+        width: 50px;
+        height: 50px;
+        border: 3px solid var(--border-color);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: var(--bg-card);
+        transition: all 0.3s;
+        font-size: 20px;
+      }
+
+      .nav-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 4px 4px 0 var(--border-color);
+      }
+
+      .nav-item.active {
+        background: var(--accent-orange);
+      }
+
+      .nav-item:nth-child(1) {
+        color: var(--accent-orange);
+      }
+      .nav-item:nth-child(2) {
+        color: var(--accent-green);
+      }
+      .nav-item:nth-child(3) {
+        color: var(--accent-red);
+      }
+      .nav-item:nth-child(4) {
+        color: #9b59b6;
+      }
+      .nav-item:nth-child(5) {
+        color: #3498db;
+      }
+      .nav-item:nth-child(6) {
+        color: #e74c3c;
+      }
+
+      /* Mobile Menu */
+      .mobile-menu-toggle {
+        display: none;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background: var(--bg-card);
+        border: 3px solid var(--border-color);
+        border-radius: 12px;
+        cursor: pointer;
+        z-index: 1001;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .mobile-menu-toggle span {
+        width: 25px;
+        height: 3px;
+        background: var(--border-color);
+        transition: all 0.3s;
+      }
+
+      /* Sections */
+      section {
+        min-height: 100vh;
+        padding: 80px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .container {
+        max-width: 1200px;
+        width: 100%;
+      }
+
+      /* Home Section */
+      #home {
+        background: var(--bg-main);
+      }
+
+      .home-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+
+      .home-text h1 {
+        font-size: 4rem;
+        font-weight: 900;
+        margin-bottom: 20px;
+        line-height: 1.2;
+        text-transform: uppercase;
+      }
+
+      .home-text h1 .highlight {
+        color: var(--accent-orange);
+        display: block;
+      }
+
+      .home-text .subtitle {
+        font-size: 1.5rem;
+        color: var(--text-gray);
+        margin-bottom: 30px;
+        font-weight: 600;
+      }
+
+      .home-text .description {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 40px;
+        color: var(--text-gray);
+      }
+
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 1rem;
+      }
+
+      .contact-item i {
+        color: var(--accent-orange);
+        font-size: 1.2rem;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 20px;
+      }
+
+      .btn {
+        padding: 15px 35px;
+        border: 4px solid var(--border-color);
+        background: var(--bg-card);
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        transition: all 0.3s;
+        text-decoration: none;
+        color: var(--text-dark);
+        display: inline-block;
+      }
+
+      .btn:hover {
+        transform: translate(-4px, -4px);
+        box-shadow: 4px 4px 0 var(--border-color);
+      }
+
+      .btn-primary {
+        background: var(--accent-orange);
+      }
+
+      .btn-secondary {
+        background: var(--accent-green);
+        color: white;
+      }
+
+      .home-image {
+        position: relative;
+      }
+
+      .image-wrapper {
+        width: 100%;
+        height: 600px;
+        border: 6px solid var(--border-color);
+        border-radius: 30px;
+        overflow: hidden;
+        background: linear-gradient(
+          135deg,
+          var(--accent-orange) 0%,
+          var(--accent-green) 100%
+        );
+        box-shadow: 12px 12px 0 var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .image-placeholder {
+        font-size: 6rem;
+        color: white;
+        opacity: 0.3;
+      }
+
+      /* Education Section */
+      #education {
+        background: #fff5e1;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 3.5rem;
+        font-weight: 900;
+        margin-bottom: 60px;
+        text-transform: uppercase;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        display: block;
+        width: 100px;
+        height: 8px;
+        background: var(--accent-orange);
+        margin: 20px auto;
+      }
+
+      .education-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+      }
+
+      .edu-center {
+        width: 250px;
+        height: 250px;
+        border: 6px solid var(--border-color);
+        border-radius: 50%;
+        background: var(--bg-card);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 8px 8px 0 var(--border-color);
+        position: relative;
+      }
+
+      .edu-center img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .edu-placeholder {
+        font-size: 4rem;
+        color: var(--accent-orange);
+      }
+
+      .edu-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        width: 100%;
+      }
+
+      .edu-card {
+        background: var(--bg-card);
+        border: 4px solid var(--border-color);
+        padding: 30px;
+        box-shadow: 6px 6px 0 var(--border-color);
+      }
+
+      .edu-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: var(--accent-green);
+      }
+
+      .edu-card .period {
+        color: var(--accent-orange);
+        font-weight: 700;
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      .edu-card p {
+        color: var(--text-gray);
+        line-height: 1.8;
+      }
+
+      /* Skills Section */
+      #skills {
+        background: var(--bg-main);
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+      }
+
+      .skill-category {
+        background: var(--bg-card);
+        border: 4px solid var(--border-color);
+        padding: 30px;
+        box-shadow: 8px 8px 0 var(--border-color);
+      }
+
+      .skill-category h3 {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+        color: var(--accent-orange);
+        text-transform: uppercase;
+      }
+
+      .skill-bars .skill-item {
+        margin-bottom: 25px;
+      }
+
+      .skill-item .skill-name {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      .skill-bar {
+        height: 25px;
+        background: #f0f0f0;
+        border: 3px solid var(--border-color);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skill-progress {
+        height: 100%;
+        background: var(--accent-orange);
+        transition: width 1s ease;
+      }
+
+      .skill-bubbles {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .skill-bubble {
+        padding: 12px 25px;
+        border: 3px solid var(--border-color);
+        background: var(--bg-card);
+        font-weight: 700;
+        display: inline-block;
+        transition: all 0.3s;
+      }
+
+      .skill-bubble:hover {
+        transform: translateY(-5px);
+        box-shadow: 4px 4px 0 var(--border-color);
+      }
+
+      .skill-bubble:nth-child(odd) {
+        background: var(--accent-green);
+        color: white;
+      }
+
+      .skill-bubble:nth-child(even) {
+        background: var(--accent-red);
+        color: white;
+      }
+
+      /* Certificates Section */
+      #certificates {
+        background: #fff5e1;
+      }
+
+      .cert-flowchart {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+      }
+
+      .cert-column {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .cert-card {
+        background: var(--bg-card);
+        border: 4px solid var(--border-color);
+        padding: 30px;
+        box-shadow: 6px 6px 0 var(--border-color);
+        position: relative;
+      }
+
+      .cert-card::before {
+        content: "";
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        width: 4px;
+        height: 30px;
+        background: var(--border-color);
+      }
+
+      .cert-card:first-child::before {
+        display: none;
+      }
+
+      .cert-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: var(--accent-orange);
+      }
+
+      .cert-card .year {
+        font-weight: 700;
+        color: var(--accent-green);
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .cert-card p {
+        color: var(--text-gray);
+      }
+
+      /* Projects Section */
+      #projects {
+        background: var(--bg-main);
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 40px;
+      }
+
+      .project-card {
+        background: var(--bg-card);
+        border: 5px solid var(--border-color);
+        overflow: hidden;
+        transition: all 0.3s;
+        box-shadow: 8px 8px 0 var(--border-color);
+      }
+
+      .project-card:hover {
+        transform: translate(-4px, -4px);
+        box-shadow: 12px 12px 0 var(--border-color);
+      }
+
+      .project-image {
+        height: 250px;
+        background: linear-gradient(
+          135deg,
+          var(--accent-orange),
+          var(--accent-green)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 5px solid var(--border-color);
+      }
+
+      .project-image i {
+        font-size: 5rem;
+        color: white;
+        opacity: 0.3;
+      }
+
+      .project-content {
+        padding: 30px;
+      }
+
+      .project-content h3 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        color: var(--accent-green);
+      }
+
+      .project-content .role {
+        color: var(--accent-orange);
+        font-weight: 700;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .project-content p {
+        color: var(--text-gray);
+        margin-bottom: 20px;
+        line-height: 1.8;
+      }
+
+      .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .tech-tag {
+        padding: 8px 15px;
+        border: 3px solid var(--border-color);
+        background: #f9f9f9;
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+
+      .project-links {
+        display: flex;
+        gap: 15px;
+      }
+
+      .project-links a {
+        padding: 12px 25px;
+        border: 3px solid var(--border-color);
+        background: var(--accent-orange);
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.3s;
+        display: inline-block;
+      }
+
+      .project-links a:hover {
+        transform: translateY(-3px);
+        box-shadow: 3px 3px 0 var(--border-color);
+      }
+
+      /* Contact Section */
+      #contact {
+        background: #fff5e1;
+      }
+
+      .contact-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+
+      .contact-illustration {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15rem;
+        color: var(--accent-orange);
+        opacity: 0.2;
+      }
+
+      .contact-form {
+        background: var(--bg-card);
+        border: 5px solid var(--border-color);
+        padding: 40px;
+        box-shadow: 10px 10px 0 var(--border-color);
+      }
+
+      .contact-form h3 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: var(--accent-green);
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 15px;
+        border: 3px solid var(--border-color);
+        background: var(--bg-main);
+        font-family: inherit;
+        font-size: 1rem;
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 150px;
+      }
+
+      .contact-info-list {
+        margin-top: 30px;
+      }
+
+      .contact-info-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 3px solid var(--border-color);
+        background: var(--bg-main);
+      }
+
+      .contact-info-item i {
+        font-size: 1.5rem;
+        color: var(--accent-orange);
+      }
+
+      .reference-section {
+        margin-top: 40px;
+        padding: 30px;
+        background: var(--bg-card);
+        border: 4px solid var(--border-color);
+        box-shadow: 6px 6px 0 var(--border-color);
+      }
+
+      .reference-section h4 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: var(--accent-green);
+      }
+
+      .reference-section p {
+        color: var(--text-gray);
+        margin-bottom: 5px;
+      }
+
+      /* Hobbies Section */
+      .hobbies-list {
+        display: flex;
+        gap: 20px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+
+      .hobby-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 30px;
+        border: 4px solid var(--border-color);
+        background: var(--bg-card);
+        box-shadow: 4px 4px 0 var(--border-color);
+      }
+
+      .hobby-item i {
+        font-size: 2rem;
+        color: var(--accent-orange);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .nav-bar {
+          display: none;
+        }
+
+        .mobile-menu-toggle {
+          display: flex;
+        }
+
+        .nav-bar.mobile-active {
+          display: flex;
+          flex-direction: column;
+          top: 80px;
+          bottom: auto;
+          left: auto;
+          right: 20px;
+          transform: none;
+          padding: 15px;
+        }
+
+        .home-content,
+        .skills-grid,
+        .cert-flowchart,
+        .contact-content {
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
+
+        .home-text h1 {
+          font-size: 2.5rem;
+        }
+
+        .section-title {
+          font-size: 2.5rem;
+        }
+
+        .image-wrapper {
+          height: 400px;
+        }
+
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .btn-group {
+          flex-direction: column;
+        }
+
+        .contact-illustration {
+          font-size: 8rem;
+        }
+      }
+
+      /* Scroll Behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Loading Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      section {
+        animation: fadeIn 0.6s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="nav-bar">
+      <div
+        class="nav-item active"
+        data-section="home"
+        onclick="scrollToSection('home')"
+      >
+        <i class="fas fa-home"></i>
+      </div>
+      <div
+        class="nav-item"
+        data-section="education"
+        onclick="scrollToSection('education')"
+      >
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <div
+        class="nav-item"
+        data-section="skills"
+        onclick="scrollToSection('skills')"
+      >
+        <i class="fas fa-code"></i>
+      </div>
+      <div
+        class="nav-item"
+        data-section="certificates"
+        onclick="scrollToSection('certificates')"
+      >
+        <i class="fas fa-certificate"></i>
+      </div>
+      <div
+        class="nav-item"
+        data-section="projects"
+        onclick="scrollToSection('projects')"
+      >
+        <i class="fas fa-project-diagram"></i>
+      </div>
+      <div
+        class="nav-item"
+        data-section="contact"
+        onclick="scrollToSection('contact')"
+      >
+        <i class="fas fa-envelope"></i>
+      </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home">
+      <div class="container">
+        <div class="home-content">
+          <div class="home-text">
+            <h1>
+              TRƯƠNG
+              <span class="highlight">TƯỜNG VI</span>
+            </h1>
+            <p class="subtitle">Thực tập sinh Công nghệ Thông tin</p>
+            <p class="description">
+              Tôi định hướng phát triển sự nghiệp trong môi trường năng động,
+              nơi có thể áp dụng kiến thức nền tảng về công nghệ và quản lý quy
+              trình. Ngắn hạn, tôi tập trung tích lũy kinh nghiệm thực tế và
+              nâng cao kỹ năng làm việc nhóm. Dài hạn, tôi mong muốn trở thành
+              nhân sự có thể đảm nhận vai trò quan trọng trong việc tối ưu quy
+              trình làm việc và đóng góp giá trị bền vững cho doanh nghiệp.
+            </p>
+            <div class="contact-info">
+              <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>truongtuongvi5804@gmail.com</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>0862585548</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Phường Bàn Cờ, Hồ Chí Minh</span>
+              </div>
+            </div>
+            <div class="btn-group">
+              <a href="#contact" class="btn btn-primary">Liên hệ</a>
+              <a
+                href="https://github.com/twngvi"
+                target="_blank"
+                class="btn btn-secondary"
+              >
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </div>
+          </div>
+          <div class="home-image">
+            <div class="image-wrapper">
+              <i class="fas fa-user-circle image-placeholder"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+      <div class="container">
+        <h2 class="section-title">Học vấn</h2>
+        <div class="education-content">
+          <div class="edu-center">
+            <i class="fas fa-user-graduate edu-placeholder"></i>
+          </div>
+          <div class="edu-cards">
+            <div class="edu-card">
+              <span class="period">2022 - 2026</span>
+              <h3>Đại học Nguyễn Tất Thành</h3>
+              <p><strong>Khoa:</strong> Công nghệ Thông tin</p>
+              <p><strong>Ngành:</strong> Kỹ sư Phần mềm</p>
+              <p><strong>GPA:</strong> 3.8 / 4.0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <div class="container">
+        <h2 class="section-title">Kỹ năng</h2>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3>Kỹ năng chuyên môn</h3>
+            <div class="skill-bars">
+              <div class="skill-item">
+                <div class="skill-name">
+                  <span>ASP.NET Core</span>
+                  <span>85%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 85%"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-name">
+                  <span>SQL Server</span>
+                  <span>80%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 80%"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-name">
+                  <span>Node.js / Express</span>
+                  <span>75%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 75%"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-name">
+                  <span>HTML5 / CSS3 / JavaScript</span>
+                  <span>90%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 90%"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-name">
+                  <span>Python / C++</span>
+                  <span>70%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 70%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Công cụ & Kỹ năng mềm</h3>
+            <div class="skill-bubbles">
+              <span class="skill-bubble">Git / GitHub</span>
+              <span class="skill-bubble">VS Code</span>
+              <span class="skill-bubble">Power BI</span>
+              <span class="skill-bubble">Trello</span>
+              <span class="skill-bubble">Figma</span>
+              <span class="skill-bubble">Google Analytics</span>
+              <span class="skill-bubble">Mailchimp</span>
+              <span class="skill-bubble">Tư duy giải quyết vấn đề</span>
+              <span class="skill-bubble">Làm việc nhóm</span>
+              <span class="skill-bubble">Tự học</span>
+              <span class="skill-bubble">Quản lý thời gian</span>
+            </div>
+            <h3 style="margin-top: 30px">Sở thích</h3>
+            <div class="hobbies-list">
+              <div class="hobby-item">
+                <i class="fas fa-puzzle-piece"></i>
+                <span>Giải đố Logic</span>
+              </div>
+              <div class="hobby-item">
+                <i class="fas fa-plane"></i>
+                <span>Du lịch</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates">
+      <div class="container">
+        <h2 class="section-title">Chứng chỉ</h2>
+        <div class="cert-flowchart">
+          <div class="cert-column">
+            <div class="cert-card">
+              <span class="year">2024</span>
+              <h3>Microsoft Office Specialist (MOS)</h3>
+              <p>
+                Chứng chỉ chuyên gia Microsoft Office, chứng minh năng lực sử
+                dụng thành thạo các công cụ Microsoft Office.
+              </p>
+            </div>
+          </div>
+          <div class="cert-column">
+            <!-- Có thể thêm chứng chỉ khác ở đây -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title">Dự án</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-fish"></i>
+            </div>
+            <div class="project-content">
+              <h3>Beauty LittleFish</h3>
+              <span class="role">Team Leader & Full-stack Developer</span>
+              <p><strong>7/2025 - 12/2025</strong></p>
+              <p>Web Thương mại Điện tử - Dự án học thuật (6 Member Team)</p>
+              <p>
+                Hệ thống kinh doanh mỹ phẩm gồm 3 phân hệ (Admin, Staff,
+                Customer) với đầy đủ quy trình đặt hàng và quản lý.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">ASP.NET Core 8.0</span>
+                <span class="tech-tag">SQL Server</span>
+                <span class="tech-tag">Google Analytics</span>
+                <span class="tech-tag">Mailchimp</span>
+              </div>
+              <ul
+                style="
+                  color: var(--text-gray);
+                  margin-bottom: 20px;
+                  padding-left: 20px;
+                "
+              >
+                <li>
+                  Thiết kế Database SQL Server (29 bảng) và xây dựng logic xử lý
+                  Voucher/Khuyến mãi phức tạp
+                </li>
+                <li>
+                  Triển khai SEO (Sitemap, Slug tự động) và tích hợp Google
+                  Analytics
+                </li>
+                <li>
+                  Dẫn dắt nhóm 6 người, review code, merge code trên GitHub và
+                  giải quyết 100% các lỗi UI/UX
+                </li>
+              </ul>
+              <div class="project-links">
+                <a href="https://github.com/twngvi" target="_blank">
+                  <i class="fab fa-github"></i> Source Code
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div
+              class="project-image"
+              style="background: linear-gradient(135deg, #3498db, #2ecc71)"
+            >
+              <i class="fas fa-cloud-sun"></i>
+            </div>
+            <div class="project-content">
+              <h3>Weather App</h3>
+              <span class="role">Full-stack Developer</span>
+              <p><strong>12/2025</strong></p>
+              <p>Ứng dụng Theo dõi & Cảnh báo Thời tiết (Dự án cá nhân)</p>
+              <p>
+                Ứng dụng SPA tra cứu thời tiết với tính năng so sánh 2 địa điểm,
+                lưu trữ lịch sử và cảnh báo biến động nhiệt độ tự động.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Express</span>
+                <span class="tech-tag">SQL Server</span>
+                <span class="tech-tag">OpenWeatherMap API</span>
+                <span class="tech-tag">Vanilla JS</span>
+                <span class="tech-tag">Chart.js</span>
+              </div>
+              <ul
+                style="
+                  color: var(--text-gray);
+                  margin-bottom: 20px;
+                  padding-left: 20px;
+                "
+              >
+                <li>
+                  Backend & API: Xây dựng RESTful API phục vụ tra cứu và so sánh
+                  dữ liệu
+                </li>
+                <li>
+                  Database: Tối ưu hóa truy vấn SQL Server thông qua 8 Stored
+                  Procedures
+                </li>
+                <li>
+                  Frontend: Phát triển giao diện Responsive không framework,
+                  tích hợp Geolocation định vị tự động và Chart.js trực quan hóa
+                  dữ liệu
+                </li>
+              </ul>
+              <div class="project-links">
+                <a href="https://github.com/twngvi" target="_blank">
+                  <i class="fab fa-github"></i> Source Code
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div
+              class="project-image"
+              style="background: linear-gradient(135deg, #9b59b6, #e74c3c)"
+            >
+              <i class="fas fa-brain"></i>
+            </div>
+            <div class="project-content">
+              <h3>Quiz Flashcard App</h3>
+              <span class="role">Developer</span>
+              <p>
+                Ứng dụng học tập với flashcard và bài kiểm tra tương tác, xây
+                dựng trên Google Apps Script.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">Google Apps Script</span>
+                <span class="tech-tag">HTML/CSS/JS</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/twngvi" target="_blank">
+                  <i class="fab fa-github"></i> Source Code
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">Liên hệ</h2>
+        <div class="contact-content">
+          <div class="contact-illustration">
+            <i class="fas fa-paper-plane"></i>
+          </div>
+          <div>
+            <div class="contact-form">
+              <h3>Gửi tin nhắn cho tôi</h3>
+              <form onsubmit="sendEmail(event)">
+                <div class="form-group">
+                  <label>Tên của bạn</label>
+                  <input type="text" name="name" required />
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" name="email" required />
+                </div>
+                <div class="form-group">
+                  <label>Tin nhắn</label>
+                  <textarea name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Gửi tin nhắn
+                </button>
+              </form>
+              <div class="contact-info-list">
+                <div class="contact-info-item">
+                  <i class="fas fa-envelope"></i>
+                  <div>
+                    <strong>Email</strong><br />
+                    truongtuongvi5804@gmail.com
+                  </div>
+                </div>
+                <div class="contact-info-item">
+                  <i class="fas fa-phone"></i>
+                  <div>
+                    <strong>Điện thoại</strong><br />
+                    0862585548
+                  </div>
+                </div>
+                <div class="contact-info-item">
+                  <i class="fab fa-github"></i>
+                  <div>
+                    <strong>GitHub</strong><br />
+                    <a
+                      href="https://github.com/twngvi"
+                      target="_blank"
+                      style="color: var(--accent-orange)"
+                      >github.com/twngvi</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="reference-section">
+              <h4>Người tham chiếu</h4>
+              <p><strong>TS. Trần Sơn Hải</strong></p>
+              <p>Trưởng ngành Công nghệ Thông tin</p>
+              <p>Viện Đào tạo Quốc tế NIIE</p>
+              <p>Email: tshai@ntt.edu.vn</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Navigation
+      function scrollToSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        section.scrollIntoView({ behavior: "smooth" });
+
+        // Update active nav item
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          item.classList.remove("active");
+          if (item.dataset.section === sectionId) {
+            item.classList.add("active");
+          }
+        });
+      }
+
+      // Mobile Menu Toggle
+      function toggleMobileMenu() {
+        const nav = document.querySelector(".nav-bar");
+        nav.classList.toggle("mobile-active");
+      }
+
+      // Intersection Observer for section highlighting
+      const sections = document.querySelectorAll("section");
+      const navItems = document.querySelectorAll(".nav-item");
+
+      const observerOptions = {
+        threshold: 0.3,
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.id;
+            navItems.forEach((item) => {
+              item.classList.remove("active");
+              if (item.dataset.section === sectionId) {
+                item.classList.add("active");
+              }
+            });
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach((section) => observer.observe(section));
+
+      // Skill Progress Animation
+      const animateSkills = () => {
+        const skillBars = document.querySelectorAll(".skill-progress");
+        skillBars.forEach((bar) => {
+          const width = bar.style.width;
+          bar.style.width = "0%";
+          setTimeout(() => {
+            bar.style.width = width;
+          }, 100);
+        });
+      };
+
+      // Trigger animation when skills section is visible
+      const skillsSection = document.querySelector("#skills");
+      const skillsObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateSkills();
+              skillsObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+
+      skillsObserver.observe(skillsSection);
+
+      // Form submission
+      function sendEmail(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+
+        // Create mailto link
+        const name = formData.get("name");
+        const email = formData.get("email");
+        const message = formData.get("message");
+
+        const subject = `Portfolio Contact from ${name}`;
+        const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+
+        window.location.href = `mailto:truongtuongvi5804@gmail.com?subject=${encodeURIComponent(
+          subject
+        )}&body=${body}`;
+
+        alert("Cảm ơn bạn đã liên hệ! Email client sẽ được mở.");
+        form.reset();
+      }
+
+      // Add loading animation on page load
+      window.addEventListener("load", () => {
+        document.body.style.opacity = "0";
+        setTimeout(() => {
+          document.body.style.transition = "opacity 0.5s";
+          document.body.style.opacity = "1";
+        }, 100);
+      });
+    </script>
+  </body>
+</html>
