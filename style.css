@@ -1277,7 +1277,7 @@ section {
 
   .arc-projects,
   .arc-path {
-    top: 50%; /* Mobile vẫn cao nhưng phù hợp màn hình nhỏ */
+    top: 45%; /* Mobile vẫn cao nhưng phù hợp màn hình nhỏ */
     width: 800px;
     height: 800px;
   }
