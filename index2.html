@@ -84,7 +84,7 @@
       /* ===== THEME SWITCHER ===== */
       .theme-switcher {
         position: fixed;
-        top: 30px;
+        bottom: 30px;
         right: 30px;
         display: flex;
         gap: 15px;
@@ -422,11 +422,16 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 10rem;
-        color: rgba(255, 255, 255, 0.3);
         box-shadow: 0 20px 60px var(--shadow);
         position: relative;
         overflow: hidden;
+      }
+
+      .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
       }
 
       .avatar::before {
@@ -444,6 +449,8 @@
         );
         transform: rotate(45deg);
         animation: shine 3s infinite;
+        z-index: 1;
+        pointer-events: none;
       }
 
       @keyframes shine {
@@ -741,193 +748,302 @@
         box-shadow: 0 5px 15px var(--accent-glow);
       }
 
-      /* ===== PROJECTS - CIRCULAR CAROUSEL ===== */
+      /* ===== PROJECTS - ARC LAYOUT ===== */
       #projects {
         background: var(--bg-secondary);
         padding: 120px 40px;
       }
 
-      .carousel-container {
+      .projects-wrapper {
         position: relative;
-        width: 700px;
-        height: 700px;
+        width: 100%;
+        max-width: 1000px;
         margin: 0 auto;
       }
 
-      .carousel-circle {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 600px;
-        height: 600px;
-        transform: translate(-50%, -50%);
-        border: 2px dashed var(--accent-primary);
-        border-radius: 50%;
-        opacity: 0.3;
-      }
-
-      .carousel-track {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 600px;
-        height: 600px;
-        transform: translate(-50%, -50%) rotate(var(--rotation, 0deg));
-        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .project-item {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 140px;
-        height: 140px;
-        margin-left: -70px;
-        margin-top: -70px;
-        transform-origin: 70px 300px;
-        cursor: pointer;
-      }
-
-      .project-item:nth-child(1) {
-        transform: rotate(0deg) translateY(-300px) rotate(0deg);
-      }
-      .project-item:nth-child(2) {
-        transform: rotate(120deg) translateY(-300px) rotate(-120deg);
-      }
-      .project-item:nth-child(3) {
-        transform: rotate(240deg) translateY(-300px) rotate(-240deg);
-      }
-
-      .project-icon {
+      /* Arc Container */
+      .arc-container {
+        position: relative;
         width: 100%;
-        height: 100%;
-        background: var(--bg-card);
-        border: 3px solid var(--accent-primary);
-        border-radius: 50%;
+        height: 600px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 3rem;
-        box-shadow: 0 10px 30px var(--shadow);
-        transition: all 0.3s ease;
-        position: relative;
       }
 
-      .project-item:hover .project-icon,
-      .project-item.active .project-icon {
-        transform: scale(1.3);
-        background: var(--accent-primary);
-        box-shadow: 0 15px 50px var(--accent-glow);
-      }
-
-      .project-item .project-name {
+      /* Arc Path (decorative curved line) */
+      .arc-path {
         position: absolute;
-        bottom: -40px;
+        top: 50px;
         left: 50%;
         transform: translateX(-50%);
-        white-space: nowrap;
+        width: 800px;
+        height: 400px;
+        border: 2px dashed var(--accent-primary);
+        border-bottom: none;
+        border-radius: 400px 400px 0 0;
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      /* Project Items on Arc */
+      .arc-projects {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 800px;
+        height: 400px;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-style: preserve-3d;
+      }
+
+      .arc-project-item {
+        position: absolute;
+        width: 160px;
+        height: 160px;
+        cursor: pointer;
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-origin: center;
+      }
+
+      /* Initial positions - will rotate around center */
+      .arc-project-item:nth-child(1) {
+        left: 50%;
+        top: 0;
+        transform: translate(-50%, -30px) rotate(0deg);
+      }
+
+      .arc-project-item:nth-child(2) {
+        left: 10%;
+        top: 35%;
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      .arc-project-item:nth-child(3) {
+        right: -10%;
+        top: 35%;
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      /* Rotation states for carousel effect */
+      .arc-projects[data-rotation="0"] .arc-project-item:nth-child(1) {
+        left: 50%;
+        top: 0;
+        transform: translate(-50%, -30px) rotate(0deg) scale(1);
+        z-index: 3;
+      }
+
+      .arc-projects[data-rotation="0"] .arc-project-item:nth-child(2) {
+        left: 10%;
+        top: 35%;
+        transform: translate(-50%, -50%) rotate(0deg) scale(0.9);
+        z-index: 1;
+      }
+
+      .arc-projects[data-rotation="0"] .arc-project-item:nth-child(3) {
+        right: -10%;
+        top: 35%;
+        transform: translate(-50%, -50%) rotate(0deg) scale(0.9);
+        z-index: 1;
+      }
+
+      /* Rotation state 1 (next clicked) */
+      .arc-projects[data-rotation="1"] .arc-project-item:nth-child(1) {
+        right: -10%;
+        top: 35%;
+        transform: translate(-50%, -50%) rotate(120deg) scale(0.9);
+        z-index: 1;
+      }
+
+      .arc-projects[data-rotation="1"] .arc-project-item:nth-child(2) {
+        left: 50%;
+        top: 0;
+        transform: translate(-50%, -30px) rotate(120deg) scale(1);
+        z-index: 3;
+      }
+
+      .arc-projects[data-rotation="1"] .arc-project-item:nth-child(3) {
+        left: 10%;
+        top: 35%;
+        transform: translate(-50%, -50%) rotate(120deg) scale(0.9);
+        z-index: 1;
+      }
+
+      /* Rotation state 2 (next clicked twice) */
+      .arc-projects[data-rotation="2"] .arc-project-item:nth-child(1) {
+        left: 10%;
+        top: 35%;
+        transform: translate(-50%, -50%) rotate(240deg) scale(0.9);
+        z-index: 1;
+      }
+
+      .arc-projects[data-rotation="2"] .arc-project-item:nth-child(2) {
+        right: -10%;
+        top: 35%;
+        transform: translate(-50%, -50%) rotate(240deg) scale(0.9);
+        z-index: 1;
+      }
+
+      .arc-projects[data-rotation="2"] .arc-project-item:nth-child(3) {
+        left: 50%;
+        top: 0;
+        transform: translate(-50%, -30px) rotate(240deg) scale(1);
+        z-index: 3;
+      }
+
+      .arc-project-icon {
+        width: 140px;
+        height: 140px;
+        background: var(--bg-card);
+        border: 4px solid var(--border-color);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.5s ease;
+        box-shadow: 0 8px 24px var(--shadow);
+      }
+
+      .arc-project-icon i {
+        font-size: 3.5rem;
+        transition: all 0.5s ease;
+      }
+
+      .arc-project-name {
+        font-size: 0.9rem;
         font-weight: 600;
         color: var(--text-primary);
-        opacity: 0;
-        transition: opacity 0.3s ease;
+        text-align: center;
+        padding: 0 10px;
+        transition: all 0.5s ease;
       }
 
-      .project-item.active .project-name {
-        opacity: 1;
+      .arc-project-item.active .arc-project-icon {
+        border-color: var(--accent-primary);
+        background: var(--accent-primary);
+        transform: scale(1.15) translateY(-10px);
+        box-shadow: 0 15px 40px var(--accent-glow);
       }
 
-      /* Project Detail Center */
-      .project-detail {
+      .arc-project-item.active .arc-project-icon i {
+        transform: scale(1.1) rotateY(360deg);
+        filter: brightness(0) invert(1);
+      }
+
+      .arc-project-item.active .arc-project-name {
+        color: var(--accent-primary);
+        font-weight: 700;
+      }
+
+      .arc-project-item:hover .arc-project-icon {
+        border-color: var(--accent-primary);
+        transform: scale(1.1) translateY(-5px);
+        box-shadow: 0 12px 35px var(--accent-glow);
+      }
+
+      /* Project Description Center */
+      .project-description {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        width: 350px;
+        transform: translate(-50%, -50%) scale(0.9);
+        width: 450px;
+        max-height: 400px;
         background: var(--bg-card);
-        border-radius: 20px;
+        border-radius: 24px;
         padding: 40px;
         box-shadow: 0 20px 60px var(--shadow);
-        border: 2px solid var(--accent-primary);
+        border: 2px solid var(--border-color);
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.5s ease;
-        max-height: 450px;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         overflow-y: auto;
       }
 
-      .project-detail.active {
+      .project-description.active {
         opacity: 1;
         pointer-events: all;
+        transform: translate(-50%, -50%) scale(1);
       }
 
-      .project-detail h3 {
+      .project-description h3 {
         font-size: 1.8rem;
         color: var(--text-primary);
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         text-align: center;
       }
 
-      .project-detail .role {
+      .project-description .role {
         display: block;
         text-align: center;
         color: var(--accent-primary);
         font-weight: 600;
+        font-size: 0.95rem;
         margin-bottom: 20px;
       }
 
-      .project-detail p {
+      .project-description p {
         color: var(--text-secondary);
-        line-height: 1.6;
-        margin-bottom: 12px;
+        line-height: 1.7;
+        margin-bottom: 10px;
         font-size: 0.95rem;
       }
 
-      .tech-stack {
+      .project-description .tech-stack {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
-        margin: 20px 0;
+        margin: 15px 0;
       }
 
-      .tech-badge {
-        padding: 6px 15px;
+      .project-description .tech-badge {
+        padding: 6px 12px;
         background: var(--bg-secondary);
         border: 1px solid var(--accent-primary);
-        border-radius: 15px;
-        font-size: 0.85rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
         color: var(--text-primary);
+        font-weight: 500;
       }
 
-      .carousel-controls {
+      /* Navigation Controls */
+      .arc-controls {
         position: absolute;
-        bottom: -80px;
+        bottom: 0;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
         gap: 20px;
       }
 
-      .control-btn {
-        width: 60px;
-        height: 60px;
+      .arc-control-btn {
+        width: 55px;
+        height: 55px;
         background: var(--bg-card);
         border: 2px solid var(--accent-primary);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         color: var(--accent-primary);
         cursor: pointer;
         transition: all 0.3s ease;
         box-shadow: 0 5px 20px var(--shadow);
       }
 
-      .control-btn:hover {
+      .arc-control-btn:hover {
         background: var(--accent-primary);
         color: white;
         transform: scale(1.1);
         box-shadow: 0 8px 30px var(--accent-glow);
+      }
+
+      .arc-control-btn:active {
+        transform: scale(0.95);
       }
 
       /* ===== CONTACT - LINE ART ===== */
@@ -1034,6 +1150,10 @@
         box-shadow: 0 12px 35px var(--accent-glow);
       }
 
+      .submit-btn:active {
+        transform: translateY(-1px);
+      }
+
       .reference-box {
         margin-top: 40px;
         padding: 30px;
@@ -1057,7 +1177,7 @@
       /* ===== RESPONSIVE ===== */
       @media (max-width: 768px) {
         .theme-switcher {
-          top: 15px;
+          bottom: 15px;
           right: 15px;
           padding: 12px;
         }
@@ -1123,6 +1243,56 @@
 
         .paper-plane-art {
           font-size: 8rem;
+        }
+
+        .arc-container {
+          height: 500px;
+        }
+
+        .arc-path,
+        .arc-projects {
+          width: 600px;
+          height: 300px;
+        }
+
+        .arc-project-item {
+          width: 120px;
+          height: 120px;
+        }
+
+        .arc-project-icon {
+          width: 100px;
+          height: 100px;
+        }
+
+        .arc-project-icon i {
+          font-size: 2.5rem;
+        }
+
+        .arc-project-name {
+          font-size: 0.8rem;
+        }
+
+        .project-description {
+          width: 90%;
+          padding: 25px;
+        }
+
+        .project-description h3 {
+          font-size: 1.4rem;
+        }
+
+        /* Adjust mobile rotation positions */
+        .arc-projects[data-rotation="0"] .arc-project-item:nth-child(2),
+        .arc-projects[data-rotation="1"] .arc-project-item:nth-child(3),
+        .arc-projects[data-rotation="2"] .arc-project-item:nth-child(1) {
+          left: 5%;
+        }
+
+        .arc-projects[data-rotation="0"] .arc-project-item:nth-child(3),
+        .arc-projects[data-rotation="1"] .arc-project-item:nth-child(1),
+        .arc-projects[data-rotation="2"] .arc-project-item:nth-child(2) {
+          right: -5%;
         }
       }
 
@@ -1265,7 +1435,10 @@
           <div class="avatar-container">
             <div class="avatar-ring"></div>
             <div class="avatar">
-              <i class="fas fa-user-circle"></i>
+              <img
+                src="https://drive.google.com/uc?export=view&id=1x1ZrVmES5UM1tPo8bUvrvotRzfTX2_Ke"
+                alt="Trương Tường Vi"
+              />
             </div>
           </div>
         </div>
@@ -1409,85 +1582,110 @@
     <section id="projects">
       <div class="container">
         <h2 class="section-title">Dự án</h2>
-        <div class="carousel-container">
-          <div class="carousel-circle"></div>
-          <div class="carousel-track" id="carouselTrack">
-            <div class="project-item active" data-project="0">
-              <div class="project-icon">🐟</div>
-              <div class="project-name">Beauty LittleFish</div>
-            </div>
-            <div class="project-item" data-project="1">
-              <div class="project-icon">☁️</div>
-              <div class="project-name">Weather App</div>
-            </div>
-            <div class="project-item" data-project="2">
-              <div class="project-icon">🧠</div>
-              <div class="project-name">Quiz Flashcard</div>
-            </div>
-          </div>
+        <div class="projects-wrapper">
+          <div class="arc-container">
+            <!-- Decorative Arc Path -->
+            <div class="arc-path"></div>
 
-          <!-- Project Details -->
-          <div class="project-detail active" id="detail-0">
-            <h3>Beauty LittleFish</h3>
-            <span class="role">Team Leader & Full-stack Developer</span>
-            <p><strong>📅 7/2025 - 12/2025</strong></p>
-            <p>Web Thương mại Điện tử - Dự án học thuật (6 Member Team)</p>
-            <div class="tech-stack">
-              <span class="tech-badge">ASP.NET Core 8.0</span>
-              <span class="tech-badge">SQL Server</span>
-              <span class="tech-badge">Google Analytics</span>
-              <span class="tech-badge">Mailchimp</span>
+            <!-- Project Items on Arc -->
+            <div class="arc-projects" id="arcProjects" data-rotation="0">
+              <div
+                class="arc-project-item active"
+                data-project="0"
+                onclick="showArcProject(0)"
+              >
+                <div class="arc-project-icon">
+                  <i class="fas fa-fish">🐟</i>
+                  <div class="arc-project-name">Beauty LittleFish</div>
+                </div>
+              </div>
+              <div
+                class="arc-project-item"
+                data-project="1"
+                onclick="showArcProject(1)"
+              >
+                <div class="arc-project-icon">
+                  <i class="fas fa-cloud-sun">☁️</i>
+                  <div class="arc-project-name">Weather App</div>
+                </div>
+              </div>
+              <div
+                class="arc-project-item"
+                data-project="2"
+                onclick="showArcProject(2)"
+              >
+                <div class="arc-project-icon">
+                  <i class="fas fa-brain">🧠</i>
+                  <div class="arc-project-name">Quiz Flashcard</div>
+                </div>
+              </div>
             </div>
-            <p>• Thiết kế Database SQL Server (29 bảng)</p>
-            <p>• Xây dựng logic xử lý Voucher/Khuyến mãi phức tạp</p>
-            <p>• Triển khai SEO (Sitemap, Slug tự động)</p>
-            <p>• Dẫn dắt nhóm 6 người, review code trên GitHub</p>
-            <p>• Giải quyết 100% các lỗi UI/UX trước deploy</p>
-          </div>
 
-          <div class="project-detail" id="detail-1">
-            <h3>Weather App</h3>
-            <span class="role">Full-stack Developer</span>
-            <p><strong>📅 12/2025</strong></p>
-            <p>Ứng dụng theo dõi & cảnh báo thời tiết (Dự án cá nhân)</p>
-            <div class="tech-stack">
-              <span class="tech-badge">Node.js</span>
-              <span class="tech-badge">Express</span>
-              <span class="tech-badge">SQL Server</span>
-              <span class="tech-badge">OpenWeatherMap API</span>
-              <span class="tech-badge">Chart.js</span>
+            <!-- Project Description Center -->
+            <div class="project-description active" id="arc-detail-0">
+              <h3>Beauty LittleFish</h3>
+              <span class="role">Team Leader & Full-stack Developer</span>
+              <p><strong>📅 7/2025 - 12/2025</strong></p>
+              <p>Web Thương mại Điện tử - Dự án học thuật (6 Member Team)</p>
+              <div class="tech-stack">
+                <span class="tech-badge">ASP.NET Core 8.0</span>
+                <span class="tech-badge">SQL Server</span>
+                <span class="tech-badge">Google Analytics</span>
+                <span class="tech-badge">Mailchimp</span>
+              </div>
+              <p>• Thiết kế Database SQL Server (29 bảng)</p>
+              <p>• Xây dựng logic xử lý Voucher/Khuyến mãi phức tạp</p>
+              <p>• Triển khai SEO (Sitemap, Slug tự động)</p>
+              <p>• Dẫn dắt nhóm 6 người, review code trên GitHub</p>
+              <p>• Giải quyết 100% các lỗi UI/UX trước deploy</p>
             </div>
-            <p>
-              <strong>Backend:</strong> Xây dựng RESTful API phục vụ tra cứu và
-              so sánh dữ liệu
-            </p>
-            <p><strong>Database:</strong> Tối ưu hóa 8 Stored Procedures</p>
-            <p>
-              <strong>Frontend:</strong> Responsive UI với Geolocation và
-              Chart.js
-            </p>
-          </div>
 
-          <div class="project-detail" id="detail-2">
-            <h3>Quiz Flashcard App</h3>
-            <span class="role">Developer</span>
-            <p>Ứng dụng học tập với flashcard và bài kiểm tra tương tác</p>
-            <div class="tech-stack">
-              <span class="tech-badge">Google Apps Script</span>
-              <span class="tech-badge">HTML/CSS/JS</span>
+            <div class="project-description" id="arc-detail-1">
+              <h3>Weather App</h3>
+              <span class="role">Full-stack Developer</span>
+              <p><strong>📅 12/2025</strong></p>
+              <p>Ứng dụng theo dõi & cảnh báo thời tiết (Dự án cá nhân)</p>
+              <div class="tech-stack">
+                <span class="tech-badge">Node.js</span>
+                <span class="tech-badge">Express</span>
+                <span class="tech-badge">SQL Server</span>
+                <span class="tech-badge">OpenWeatherMap API</span>
+                <span class="tech-badge">Chart.js</span>
+              </div>
+              <p>
+                <strong>Backend:</strong> Xây dựng RESTful API phục vụ tra cứu
+                và so sánh dữ liệu
+              </p>
+              <p><strong>Database:</strong> Tối ưu hóa 8 Stored Procedures</p>
+              <p>
+                <strong>Frontend:</strong> Responsive UI với Geolocation và
+                Chart.js
+              </p>
             </div>
-            <p>
-              Xây dựng trên nền tảng Google Apps Script để dễ dàng chia sẻ và sử
-              dụng. Hỗ trợ tạo flashcard, quiz và theo dõi tiến độ học tập.
-            </p>
-          </div>
 
-          <div class="carousel-controls">
-            <div class="control-btn" onclick="rotateCarousel(-120)">
-              <i class="fas fa-chevron-left"></i>
+            <div class="project-description" id="arc-detail-2">
+              <h3>Quiz Flashcard App</h3>
+              <span class="role">Developer</span>
+              <p><strong>📅 2024</strong></p>
+              <p>Ứng dụng học tập với flashcard và bài kiểm tra tương tác</p>
+              <div class="tech-stack">
+                <span class="tech-badge">Google Apps Script</span>
+                <span class="tech-badge">HTML/CSS/JS</span>
+              </div>
+              <p>
+                Xây dựng trên nền tảng Google Apps Script để dễ dàng chia sẻ và
+                sử dụng. Hỗ trợ tạo flashcard, quiz và theo dõi tiến độ học tập.
+              </p>
             </div>
-            <div class="control-btn" onclick="rotateCarousel(120)">
-              <i class="fas fa-chevron-right"></i>
+
+            <!-- Navigation Controls -->
+            <div class="arc-controls">
+              <div class="arc-control-btn" onclick="navigateArcProject(-1)">
+                <i class="fas fa-chevron-left"></i>
+              </div>
+              <div class="arc-control-btn" onclick="navigateArcProject(1)">
+                <i class="fas fa-chevron-right"></i>
+              </div>
             </div>
           </div>
         </div>
@@ -1603,47 +1801,38 @@
 
       sections.forEach((section) => observer.observe(section));
 
-      // Circular Carousel
+      // Arc Projects with Rotation
+      let currentArcProject = 0;
       let currentRotation = 0;
-      let currentProject = 0;
+      const totalProjects = 3;
 
-      function rotateCarousel(degrees) {
-        currentRotation += degrees;
-        const track = document.getElementById("carouselTrack");
-        track.style.setProperty("--rotation", currentRotation + "deg");
+      function showArcProject(index) {
+        currentArcProject = index;
+        currentRotation = index;
 
-        // Calculate active project
-        const normalizedRotation = ((currentRotation % 360) + 360) % 360;
-        if (normalizedRotation >= 0 && normalizedRotation < 120) {
-          showProject(0);
-        } else if (normalizedRotation >= 120 && normalizedRotation < 240) {
-          showProject(1);
-        } else {
-          showProject(2);
-        }
-      }
+        const arcProjects = document.getElementById("arcProjects");
+        arcProjects.setAttribute("data-rotation", currentRotation);
 
-      function showProject(index) {
-        currentProject = index;
-
-        // Update project items
-        document.querySelectorAll(".project-item").forEach((item, i) => {
+        // Update active state
+        document.querySelectorAll(".arc-project-item").forEach((item, i) => {
           item.classList.toggle("active", i === index);
         });
 
-        // Update project details
-        document.querySelectorAll(".project-detail").forEach((detail, i) => {
-          detail.classList.toggle("active", i === index);
-        });
+        // Update project descriptions with fade effect
+        document
+          .querySelectorAll(".project-description")
+          .forEach((detail, i) => {
+            detail.classList.toggle("active", i === index);
+          });
       }
 
-      // Click on project items
-      document.querySelectorAll(".project-item").forEach((item, index) => {
-        item.addEventListener("click", () => {
-          const rotationNeeded = index * 120 - (currentRotation % 360);
-          rotateCarousel(rotationNeeded);
-        });
-      });
+      function navigateArcProject(direction) {
+        currentArcProject =
+          (currentArcProject + direction + totalProjects) % totalProjects;
+        currentRotation = currentArcProject;
+
+        showArcProject(currentArcProject);
+      }
 
       // Form Submission
       function sendEmail(event) {
