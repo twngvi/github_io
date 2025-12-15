@@ -1048,9 +1048,28 @@ section {
 .paper-plane-art {
   font-size: 15rem;
   color: var(--accent-primary);
-  opacity: 0.2;
+  opacity: 0;
   text-align: center;
-  animation: float 4s ease-in-out infinite;
+  animation: flyIn 1.5s ease-out forwards, float 4s ease-in-out 1.5s infinite;
+}
+
+/* Animation máy bay bay vào từ ngoài màn hình */
+@keyframes flyIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100vw) translateY(50vh) rotate(-45deg) scale(0.3);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateX(10%) translateY(-10%) rotate(5deg) scale(1.1);
+  }
+  80% {
+    transform: translateX(-5%) translateY(5%) rotate(-2deg) scale(0.95);
+  }
+  100% {
+    opacity: 0.2;
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+  }
 }
 
 @keyframes float {
