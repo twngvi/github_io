@@ -90,10 +90,65 @@
         gap: 15px;
         z-index: 1000;
         background: var(--bg-card);
-        padding: 15px 20px;
+        padding: 15px;
         border-radius: 50px;
         box-shadow: 0 4px 20px var(--shadow);
         border: 1px solid var(--border-color);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .theme-switcher.collapsed {
+        padding: 15px;
+        gap: 0;
+      }
+
+      .theme-toggle-btn {
+        width: 50px;
+        height: 50px;
+        border: 2px solid var(--accent-primary);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary),
+          var(--accent-secondary)
+        );
+        flex-shrink: 0;
+        z-index: 2;
+      }
+
+      .theme-toggle-btn i {
+        color: white;
+        font-size: 1.5rem;
+        transition: transform 0.3s ease;
+      }
+
+      .theme-toggle-btn:hover {
+        transform: scale(1.1) rotate(15deg);
+        box-shadow: 0 0 20px var(--accent-glow);
+      }
+
+      .theme-switcher.collapsed .theme-toggle-btn i {
+        transform: rotate(0deg);
+      }
+
+      .theme-options {
+        display: flex;
+        gap: 15px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        max-width: 250px;
+        overflow: hidden;
+      }
+
+      .theme-switcher.collapsed .theme-options {
+        max-width: 0;
+        gap: 0;
+        opacity: 0;
       }
 
       .theme-btn {
@@ -105,8 +160,11 @@
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
       }
-
       .theme-btn::before {
         content: "";
         position: absolute;
@@ -1001,8 +1059,20 @@
         .theme-switcher {
           top: 15px;
           right: 15px;
-          padding: 10px 15px;
-          gap: 10px;
+          padding: 12px;
+        }
+
+        .theme-switcher.collapsed {
+          padding: 12px;
+        }
+
+        .theme-toggle-btn {
+          width: 45px;
+          height: 45px;
+        }
+
+        .theme-toggle-btn i {
+          font-size: 1.3rem;
         }
 
         .theme-btn {
@@ -1082,34 +1152,43 @@
   </head>
   <body class="winter">
     <!-- Theme Switcher -->
-    <div class="theme-switcher">
+    <div class="theme-switcher collapsed">
       <div
-        class="theme-btn spring active"
-        onclick="changeTheme('spring')"
-        title="Spring Mode"
+        class="theme-toggle-btn"
+        onclick="toggleThemeSwitcher()"
+        title="Chọn Theme"
       >
-        <i class="fas fa-seedling"></i>
+        <i class="fas fa-palette"></i>
       </div>
-      <div
-        class="theme-btn summer"
-        onclick="changeTheme('summer')"
-        title="Summer Mode"
-      >
-        <i class="fas fa-sun"></i>
-      </div>
-      <div
-        class="theme-btn autumn"
-        onclick="changeTheme('autumn')"
-        title="Autumn Mode"
-      >
-        <i class="fas fa-leaf"></i>
-      </div>
-      <div
-        class="theme-btn winter"
-        onclick="changeTheme('winter')"
-        title="Winter Mode"
-      >
-        <i class="fas fa-snowflake"></i>
+      <div class="theme-options">
+        <div
+          class="theme-btn spring"
+          onclick="changeTheme('spring')"
+          title="Spring Mode"
+        >
+          <i class="fas fa-seedling"></i>
+        </div>
+        <div
+          class="theme-btn summer"
+          onclick="changeTheme('summer')"
+          title="Summer Mode"
+        >
+          <i class="fas fa-sun"></i>
+        </div>
+        <div
+          class="theme-btn autumn"
+          onclick="changeTheme('autumn')"
+          title="Autumn Mode"
+        >
+          <i class="fas fa-leaf"></i>
+        </div>
+        <div
+          class="theme-btn winter active"
+          onclick="changeTheme('winter')"
+          title="Winter Mode"
+        >
+          <i class="fas fa-snowflake"></i>
+        </div>
       </div>
     </div>
 
@@ -1459,6 +1538,22 @@
     <script>
       // Theme Switcher
       let currentTheme = "spring";
+      let themeSwitcherOpen = false;
+
+      function toggleThemeSwitcher() {
+        const switcher = document.querySelector(".theme-switcher");
+        const toggleBtn = document.querySelector(".theme-toggle-btn i");
+
+        themeSwitcherOpen = !themeSwitcherOpen;
+
+        if (themeSwitcherOpen) {
+          switcher.classList.remove("collapsed");
+          toggleBtn.style.transform = "rotate(180deg)";
+        } else {
+          switcher.classList.add("collapsed");
+          toggleBtn.style.transform = "rotate(0deg)";
+        }
+      }
 
       function changeTheme(theme) {
         currentTheme = theme;
@@ -1469,6 +1564,13 @@
           btn.classList.remove("active");
         });
         document.querySelector(`.theme-btn.${theme}`).classList.add("active");
+
+        // Auto close theme switcher after selection
+        setTimeout(() => {
+          if (themeSwitcherOpen) {
+            toggleThemeSwitcher();
+          }
+        }, 300);
       }
 
       // Navigation
@@ -1591,8 +1693,16 @@
       window.addEventListener("scroll", animateOnScroll);
       window.addEventListener("load", () => {
         animateOnScroll();
-        // Set Spring theme as default
-        changeTheme("spring");
+        // Set Winter theme as default to match initial active button
+        changeTheme("winter");
+      });
+
+      // Close theme switcher when clicking outside
+      document.addEventListener("click", (e) => {
+        const switcher = document.querySelector(".theme-switcher");
+        if (!switcher.contains(e.target) && themeSwitcherOpen) {
+          toggleThemeSwitcher();
+        }
       });
     </script>
   </body>
