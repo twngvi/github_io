@@ -138,31 +138,32 @@
         <h2 class="section-title">Học vấn & Chứng chỉ</h2>
         <div class="edu-cert-grid">
           <div class="edu-cert-column">
-            <h3>🎓 Học vấn</h3>
+            <h3>Học vấn</h3>
             <div class="timeline-container">
               <div class="timeline-line"></div>
               <div class="timeline-card">
                 <span class="timeline-period">2022 - 2026</span>
                 <h3>Đại học Nguyễn Tất Thành</h3>
-                <p><strong>🎓 Khoa:</strong> Công nghệ Thông tin</p>
-                <p><strong>💻 Ngành:</strong> Kỹ sư Phần mềm</p>
-                <p><strong>⭐ GPA:</strong> 3.8 / 4.0</p>
+                <p><strong>Khoa:</strong> Công nghệ Thông tin</p>
+                <p><strong>Ngành:</strong> Kỹ sư Phần mềm</p>
+                <p><strong>GPA:</strong> 3.8 / 4.0</p>
               </div>
             </div>
           </div>
 
           <div class="edu-cert-column">
-            <h3>🏆 Chứng chỉ</h3>
+            <h3>Chứng chỉ</h3>
             <div class="timeline-container">
               <div class="timeline-line"></div>
               <div class="timeline-card">
                 <span class="timeline-period">2024</span>
-                <h3>Microsoft Office Specialist (MOS)</h3>
-                <p>
-                  Chứng chỉ chuyên gia Microsoft Office, chứng minh năng lực sử
-                  dụng thành thạo các công cụ Microsoft Office trong môi trường
-                  chuyên nghiệp.
-                </p>
+                <h4>Microsoft Office Specialist (MOS)</h4>
+              </div>
+              <div class="timeline-card">
+                <span class="timeline-period">2025</span>
+                <h4>
+                  Google Cloud Skill Badge: Derive Insights from BigQuery Data
+                </h4>
               </div>
             </div>
           </div>
@@ -239,111 +240,56 @@
       <div class="container">
         <h2 class="section-title">Dự án</h2>
         <div class="projects-wrapper">
-          <div class="arc-container">
-            <!-- Project Title Display -->
-            <div class="project-title-display active" id="projectTitle">
-              Beauty LittleFish
+          <div class="projects-card-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+              <div class="project-icon"><i class="fas fa-fish"></i></div>
+              <div class="project-title">Beauty LittleFish</div>
+              <div class="project-role">Team Leader & Full-stack Developer</div>
+              <div class="project-time">07/2025 - 12/2025</div>
+              <div class="project-desc">
+                Web Thương mại Điện tử - Dự án học thuật (6 Member Team)
+              </div>
+              <div class="project-tech">
+                <span class="skill-tag">ASP.NET Core 8.0</span>
+                <span class="skill-tag">SQL Server</span>
+                <span class="skill-tag">Google Analytics</span>
+                <span class="skill-tag">Mailchimp</span>
+              </div>
+              <ul class="project-detail-list">
+                <li>Thiết kế Database SQL Server (29 bảng)</li>
+                <li>Xây dựng logic xử lý Voucher/Khuyến mãi phức tạp</li>
+                <li>Triển khai SEO (Sitemap, Slug tự động)</li>
+                <li>Dẫn dắt nhóm 6 người, review code trên GitHub</li>
+                <li>Giải quyết 100% các lỗi UI/UX trước deploy</li>
+              </ul>
             </div>
-
-            <!-- Decorative Arc Path -->
-            <div class="arc-path"></div>
-
-            <!-- Project Items on Arc -->
-            <div class="arc-projects" id="arcProjects" data-rotation="0">
-              <div
-                class="arc-project-item active"
-                data-project="0"
-                onclick="showArcProject(0)"
-              >
-                <div class="arc-project-icon">
-                  <i class="fas fa-fish">🐟</i>
-                  <div class="arc-project-name">Beauty LittleFish</div>
-                </div>
+            <!-- Project 2 -->
+            <div class="project-card">
+              <div class="project-icon"><i class="fas fa-cloud-sun"></i></div>
+              <div class="project-title">Weather App</div>
+              <div class="project-role">Full-stack Developer</div>
+              <div class="project-time">12/2025</div>
+              <div class="project-desc">
+                Ứng dụng theo dõi & cảnh báo thời tiết (Dự án cá nhân)
               </div>
-              <div
-                class="arc-project-item"
-                data-project="1"
-                onclick="showArcProject(1)"
-              >
-                <div class="arc-project-icon">
-                  <i class="fas fa-cloud-sun">☁️</i>
-                  <div class="arc-project-name">Weather App</div>
-                </div>
+              <div class="project-tech">
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">Express</span>
+                <span class="skill-tag">SQL Server</span>
+                <span class="skill-tag">OpenWeatherMap API</span>
+                <span class="skill-tag">Chart.js</span>
               </div>
-              <div
-                class="arc-project-item"
-                data-project="2"
-                onclick="showArcProject(2)"
-              >
-                <div class="arc-project-icon">
-                  <i class="fas fa-brain">🧠</i>
-                  <div class="arc-project-name">Quiz Flashcard</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Project Description Center -->
-            <div class="project-description active" id="arc-detail-0">
-              <span class="role">Team Leader & Full-stack Developer</span>
-              <p><strong>📅 7/2025 - 12/2025</strong></p>
-              <p>Web Thương mại Điện tử - Dự án học thuật (6 Member Team)</p>
-              <div class="tech-stack">
-                <span class="tech-badge">ASP.NET Core 8.0</span>
-                <span class="tech-badge">SQL Server</span>
-                <span class="tech-badge">Google Analytics</span>
-                <span class="tech-badge">Mailchimp</span>
-              </div>
-              <p>• Thiết kế Database SQL Server (29 bảng)</p>
-              <p>• Xây dựng logic xử lý Voucher/Khuyến mãi phức tạp</p>
-              <p>• Triển khai SEO (Sitemap, Slug tự động)</p>
-              <p>• Dẫn dắt nhóm 6 người, review code trên GitHub</p>
-              <p>• Giải quyết 100% các lỗi UI/UX trước deploy</p>
-            </div>
-
-            <div class="project-description" id="arc-detail-1">
-              <span class="role">Full-stack Developer</span>
-              <p><strong>📅 12/2025</strong></p>
-              <p>Ứng dụng theo dõi & cảnh báo thời tiết (Dự án cá nhân)</p>
-              <div class="tech-stack">
-                <span class="tech-badge">Node.js</span>
-                <span class="tech-badge">Express</span>
-                <span class="tech-badge">SQL Server</span>
-                <span class="tech-badge">OpenWeatherMap API</span>
-                <span class="tech-badge">Chart.js</span>
-              </div>
-              <p>
-                <strong>Backend:</strong> Xây dựng RESTful API phục vụ tra cứu
-                và so sánh dữ liệu
-              </p>
-              <p><strong>Database:</strong> Tối ưu hóa 8 Stored Procedures</p>
-              <p>
-                <strong>Frontend:</strong> Responsive UI với Geolocation và
-                Chart.js
-              </p>
-            </div>
-
-            <div class="project-description" id="arc-detail-2">
-              <span class="role">Developer</span>
-              <p><strong>📅 2024</strong></p>
-              <p>Ứng dụng học tập với flashcard và bài kiểm tra tương tác</p>
-              <div class="tech-stack">
-                <span class="tech-badge">Google Apps Script</span>
-                <span class="tech-badge">HTML/CSS/JS</span>
-              </div>
-              <p>
-                Xây dựng trên nền tảng Google Apps Script để dễ dàng chia sẻ và
-                sử dụng. Hỗ trợ tạo flashcard, quiz và theo dõi tiến độ học tập.
-              </p>
-            </div>
-
-            <!-- Navigation Controls -->
-            <div class="arc-controls">
-              <div class="arc-control-btn" onclick="navigateArcProject(-1)">
-                <i class="fas fa-chevron-left"></i>
-              </div>
-              <div class="arc-control-btn" onclick="navigateArcProject(1)">
-                <i class="fas fa-chevron-right"></i>
-              </div>
+              <ul class="project-detail-list">
+                <li>
+                  <b>Backend:</b> Xây dựng RESTful API phục vụ tra cứu và so
+                  sánh dữ liệu
+                </li>
+                <li><b>Database:</b> Tối ưu hóa 8 Stored Procedures</li>
+                <li>
+                  <b>Frontend:</b> Responsive UI với Geolocation và Chart.js
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -378,13 +324,6 @@
                   <i class="fas fa-paper-plane"></i> Gửi đi
                 </button>
               </form>
-            </div>
-            <div class="reference-box">
-              <h4>📚 Người tham chiếu</h4>
-              <p><strong>TS. Trần Sơn Hải</strong></p>
-              <p>Trưởng ngành Công nghệ Thông tin</p>
-              <p>Viện Đào tạo Quốc tế NIIE</p>
-              <p>✉️ Email: tshai@ntt.edu.vn</p>
             </div>
           </div>
         </div>
