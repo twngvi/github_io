@@ -87,7 +87,9 @@
         <div class="home-grid">
           <div class="home-info">
             <h1>TRƯƠNG TƯỜNG VI</h1>
-            <p class="subtitle">Web Developer Intern (Full-stack)</p>
+            <p class="subtitle">
+              <span class="subtitle-typing" id="subtitleTyping"></span>
+            </p>
             <p class="description">
               Tôi định hướng phát triển sự nghiệp trong môi trường năng động,
               nơi có thể áp dụng kiến thức nền tảng về công nghệ và quản lý quy
@@ -96,30 +98,12 @@
               nhân sự có thể đảm nhận vai trò quan trọng trong việc tối ưu quy
               trình làm việc và đóng góp giá trị bền vững cho doanh nghiệp.
             </p>
-
-            <div class="info-grid">
-              <div class="info-item">
-                <i class="fas fa-envelope"></i>
-                <span>truongtuongvi584@gmail.com</span>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-phone"></i>
-                <span>0862585548</span>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Phường Bàn Cờ, HCM</span>
-              </div>
-              <div class="info-item">
-                <i class="fab fa-github"></i>
-                <a
-                  href="https://github.com/twngvi"
-                  target="_blank"
-                  style="color: inherit; text-decoration: none"
-                  >github.com/twngvi</a
-                >
-              </div>
-            </div>
+            <button
+              class="contact-now-btn"
+              onclick="scrollToSection('contact')"
+            >
+              <i class="fas fa-paper-plane"></i> Liên hệ ngay
+            </button>
           </div>
 
           <div class="avatar-container">
@@ -304,30 +288,28 @@
     <section id="contact">
       <div class="container">
         <h2 class="section-title">Liên hệ</h2>
-        <div class="contact-grid">
+        <div class="contact-wrapper">
           <div class="paper-plane-art">
             <i class="fas fa-paper-plane"></i>
           </div>
-          <div>
-            <div class="contact-form">
-              <h3>Gửi tin nhắn</h3>
-              <form onsubmit="sendEmail(event)">
-                <div class="form-group">
-                  <label>Tên của bạn</label>
-                  <input type="text" name="name" required />
-                </div>
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="email" name="email" required />
-                </div>
-                <div class="form-group">
-                  <label>Tin nhắn</label>
-                  <textarea name="message" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">
-                  <i class="fas fa-paper-plane"></i> Gửi đi
-                </button>
-              </form>
+          <div class="contact-cards-grid">
+            <div class="contact-card">
+              <i class="fas fa-envelope"></i>
+              <span>truongtuongvi584@gmail.com</span>
+            </div>
+            <div class="contact-card">
+              <i class="fas fa-phone"></i>
+              <span>0862585548</span>
+            </div>
+            <div class="contact-card">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Phường Bàn Cờ, HCM</span>
+            </div>
+            <div class="contact-card">
+              <i class="fab fa-github"></i>
+              <a href="https://github.com/twngvi" target="_blank"
+                >github.com/twngvi</a
+              >
             </div>
           </div>
         </div>
