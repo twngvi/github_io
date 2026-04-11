@@ -201,6 +201,99 @@ body {
   font-size: 1rem;
 }
 
+/* ===== NAVIGATION BAR ===== */
+.nav-container {
+  position: fixed;
+  top: 50%;
+  left: 24px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 14px 10px;
+  box-shadow: 0 8px 32px var(--shadow);
+  z-index: 1000;
+}
+
+.nav-item {
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 50%;
+  background: var(--text-secondary);
+  color: transparent;
+  font-size: 0;
+  line-height: 0;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.nav-item:hover {
+  background: var(--accent-primary);
+  transform: scale(1.2);
+}
+
+.nav-item.active {
+  background: var(--accent-primary);
+  box-shadow: 0 0 14px var(--accent-glow);
+  transform: scale(1.25);
+}
+
+.nav-item::before {
+  content: attr(data-label);
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 14px);
+  transform: translateY(-50%);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 6px 16px var(--shadow);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-item:hover::before {
+  opacity: 1;
+  transform: translateY(-50%) translateX(2px);
+}
+
+@media (max-width: 1024px) {
+  .nav-container {
+    left: 12px;
+    gap: 14px;
+    padding: 12px 8px;
+  }
+
+  .nav-item {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-container {
+    display: none;
+  }
+}
+
 /* ===== SECTIONS ===== */
 section {
   min-height: 100vh;
@@ -498,7 +591,7 @@ section {
 /* ===== SECTION TITLE ===== */
 .section-title {
   text-align: center;
-  font-size: 3.5rem;
+  font-size: clamp(2.2rem, 4.8vw, 3rem);
   font-weight: 700;
   margin-bottom: 0px;
   position: relative;
@@ -524,6 +617,9 @@ section {
   );
   margin: 30px auto 0;
   border-radius: 2px;
+  transform: scaleX(0.45);
+  opacity: 0.45;
+  transform-origin: center;
 }
 
 /* ===== EDUCATION & CERTIFICATES - TIMELINE CARDS ===== */
@@ -1030,10 +1126,14 @@ section {
 
 .contact-wrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(640px, 1.1fr);
   gap: 60px;
   align-items: center;
+  justify-content: center;
   margin-top: 10px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .paper-plane-art {
@@ -1122,18 +1222,19 @@ section {
 /* ===== CONTACT CARDS - ENHANCED ===== */
 .contact-cards-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(240px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  gap: 18px;
   width: 100%;
-  max-width: 620px;
+  max-width: 760px;
+  justify-self: center;
 }
 
 .contact-card {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   padding: 18px 16px;
   background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
   border-radius: 14px;
@@ -1145,7 +1246,7 @@ section {
   transform: scale(0.9);
   position: relative;
   overflow: hidden;
-  text-align: left;
+  text-align: center;
   min-height: 120px;
 }
 
@@ -1234,6 +1335,7 @@ section {
   font-weight: 500;
   line-height: 1.35;
   max-width: 100%;
+  text-align: center;
 }
 
 .contact-card:hover span,
@@ -1248,9 +1350,37 @@ section {
 
 /* Responsive cho contact cards */
 @media (max-width: 768px) {
+  .edu-cert-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .skill-category {
+    padding: 26px 20px;
+  }
+
+  .timeline-line {
+    left: 12px;
+  }
+
+  .timeline-card {
+    margin-left: 22px;
+    padding: 20px 16px 20px 36px;
+  }
+
+  .timeline-card::before {
+    left: 4px;
+  }
+
   .contact-wrapper {
     grid-template-columns: 1fr;
     gap: 30px;
+    justify-items: center;
   }
 
   .paper-plane-art {
@@ -1258,6 +1388,7 @@ section {
   }
 
   .contact-cards-grid {
+    width: min(100%, 640px);
     max-width: 100%;
     gap: 12px;
     grid-template-columns: 1fr;
@@ -1832,15 +1963,30 @@ body.autumn::after {
 /* Section Title Reveal */
 .section-title {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translate3d(0, 22px, 0);
+  filter: blur(6px);
+  will-change: transform, opacity, filter;
   transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.section-title::after {
+  transition:
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.7s ease;
 }
 
 .section-title.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
+.section-title.visible::after {
+  transform: scaleX(1);
+  opacity: 1;
 }
 
 /* ===== PROJECTS CARD GRID ===== */

@@ -40,6 +40,27 @@ function scrollToSection(sectionId) {
   document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
 }
 
+const sections = document.querySelectorAll("section");
+const navItems = document.querySelectorAll(".nav-item");
+
+if (sections.length && navItems.length) {
+  const navObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const sectionId = entry.target.id;
+        navItems.forEach((item) => {
+          item.classList.toggle("active", item.dataset.section === sectionId);
+        });
+      });
+    },
+    { threshold: 0.55 },
+  );
+
+  sections.forEach((section) => navObserver.observe(section));
+}
+
 // Arc Projects with Rotation - Ferris Wheel Mechanic
 let currentIndex = 0;
 let currentRotation = 0;
