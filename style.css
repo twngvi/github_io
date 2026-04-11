@@ -204,14 +204,15 @@ body {
 /* ===== NAVIGATION ===== */
 .nav-container {
   position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  left: 24px;
+  transform: translateY(-50%);
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 18px;
   background: var(--bg-card);
-  padding: 15px 40px;
-  border-radius: 50px;
+  padding: 18px 14px;
+  border-radius: 999px;
   box-shadow: 0 8px 32px var(--shadow);
   border: 1px solid var(--border-color);
   z-index: 1000;
@@ -230,14 +231,36 @@ body {
 .nav-dot::after {
   content: "";
   position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  left: calc(100% + 8px);
+  transform: translateY(-50%);
   width: 0;
-  height: 3px;
+  height: 2px;
   background: var(--accent-primary);
   border-radius: 2px;
   transition: width 0.3s ease;
+}
+
+.nav-dot::before {
+  content: attr(data-label);
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 16px);
+  transform: translateY(-50%);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 6px 16px var(--shadow);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .nav-dot.active {
@@ -247,12 +270,31 @@ body {
 }
 
 .nav-dot.active::after {
-  width: 100%;
+  width: 18px;
 }
 
 .nav-dot:hover {
   background: var(--accent-primary);
   transform: scale(1.2);
+}
+
+.nav-dot:hover::before {
+  opacity: 1;
+  transform: translateY(-50%) translateX(2px);
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    left: 12px;
+    padding: 14px 10px;
+    gap: 14px;
+  }
+
+  .nav-dot::before {
+    font-size: 0.75rem;
+    padding: 5px 8px;
+    left: calc(100% + 12px);
+  }
 }
 
 /* ===== SECTIONS ===== */
@@ -298,7 +340,9 @@ section {
   line-height: 1.2;
   overflow: hidden;
   white-space: nowrap;
-  animation: typing 2s steps(20) 0.3s forwards, blink 0.75s step-end infinite;
+  animation:
+    typing 2s steps(20) 0.3s forwards,
+    blink 0.75s step-end infinite;
   border-right: 3px solid var(--accent-primary);
   max-width: fit-content;
 }
@@ -649,7 +693,9 @@ section {
   height: 16px;
   background: var(--accent-primary);
   border-radius: 50%;
-  box-shadow: 0 0 0 4px var(--bg-secondary), 0 0 15px var(--accent-glow);
+  box-shadow:
+    0 0 0 4px var(--bg-secondary),
+    0 0 15px var(--accent-glow);
 }
 
 .timeline-card h3 {
@@ -853,7 +899,9 @@ section {
   transform: translate(-50%, 0);
   pointer-events: none;
   opacity: 0.6;
-  box-shadow: 0 0 20px var(--accent-glow), inset 0 0 20px var(--accent-glow);
+  box-shadow:
+    0 0 20px var(--accent-glow),
+    inset 0 0 20px var(--accent-glow);
   animation: pulse-arc 3s ease-in-out infinite;
 }
 
@@ -861,11 +909,15 @@ section {
   0%,
   100% {
     opacity: 0.6;
-    box-shadow: 0 0 20px var(--accent-glow), inset 0 0 20px var(--accent-glow);
+    box-shadow:
+      0 0 20px var(--accent-glow),
+      inset 0 0 20px var(--accent-glow);
   }
   50% {
     opacity: 0.8;
-    box-shadow: 0 0 30px var(--accent-glow), inset 0 0 30px var(--accent-glow);
+    box-shadow:
+      0 0 30px var(--accent-glow),
+      inset 0 0 30px var(--accent-glow);
   }
 }
 
@@ -921,7 +973,9 @@ section {
   align-items: center;
   justify-content: center;
   box-shadow: 0 10px 30px var(--shadow);
-  transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease,
+  transition:
+    transform 1s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 0.3s ease,
     border-color 0.3s ease;
   position: relative;
 }
@@ -1086,7 +1140,9 @@ section {
 }
 
 .paper-plane-art.animate {
-  animation: flyIn 1.5s ease-out forwards, float 4s ease-in-out 1.5s infinite;
+  animation:
+    flyIn 1.5s ease-out forwards,
+    float 4s ease-in-out 1.5s infinite;
 }
 
 /* Animation máy bay bay vào */
@@ -1246,7 +1302,9 @@ section {
 .contact-card:hover {
   border-color: var(--accent-primary);
   transform: translateY(-8px) scale(1.05);
-  box-shadow: 0 20px 50px var(--accent-glow), 0 0 30px var(--accent-glow);
+  box-shadow:
+    0 20px 50px var(--accent-glow),
+    0 0 30px var(--accent-glow);
   background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
   z-index: 10;
 }
@@ -1374,7 +1432,8 @@ body::before {
 
 /* Winter Theme - Floating Snowflakes */
 body.winter::before {
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at 20% 80%,
       rgba(56, 189, 248, 0.15) 0%,
       transparent 50%
@@ -1406,13 +1465,22 @@ body.winter::after {
   height: 100%;
   z-index: -1;
   pointer-events: none;
-  background-image: radial-gradient(
+  background-image:
+    radial-gradient(
       2px 2px at 20px 30px,
       rgba(255, 255, 255, 0.3),
       transparent
     ),
-    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
-    radial-gradient(2px 2px at 90px 40px, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(
+      2px 2px at 40px 70px,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    ),
+    radial-gradient(
+      2px 2px at 90px 40px,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    ),
     radial-gradient(
       2px 2px at 50px 160px,
       rgba(255, 255, 255, 0.3),
@@ -1453,7 +1521,8 @@ body.winter::after {
 
 /* Spring Theme - Floating Petals & Leaves */
 body.spring::before {
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at 10% 90%,
       rgba(74, 222, 128, 0.2) 0%,
       transparent 50%
@@ -1485,7 +1554,8 @@ body.spring::after {
   height: 100%;
   z-index: -1;
   pointer-events: none;
-  background-image: radial-gradient(
+  background-image:
+    radial-gradient(
       ellipse 8px 12px at 30px 50px,
       rgba(74, 222, 128, 0.3),
       transparent
@@ -1538,7 +1608,8 @@ body.spring::after {
 
 /* Summer Theme - Sun Rays & Heat Waves */
 body.summer::before {
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at 85% 15%,
       rgba(249, 115, 22, 0.25) 0%,
       transparent 40%
@@ -1570,7 +1641,8 @@ body.summer::after {
   height: 200%;
   z-index: -1;
   pointer-events: none;
-  background: conic-gradient(
+  background:
+    conic-gradient(
       from 0deg at 70% 20%,
       transparent 0deg,
       rgba(249, 115, 22, 0.08) 20deg,
@@ -1608,7 +1680,8 @@ body.summer::after {
 
 /* Autumn Theme - Falling Leaves */
 body.autumn::before {
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at 25% 75%,
       rgba(217, 119, 6, 0.15) 0%,
       transparent 50%
@@ -1640,7 +1713,8 @@ body.autumn::after {
   height: 100%;
   z-index: -1;
   pointer-events: none;
-  background-image: radial-gradient(
+  background-image:
+    radial-gradient(
       ellipse 12px 8px at 40px 60px,
       rgba(217, 119, 6, 0.25),
       transparent
@@ -1698,12 +1772,16 @@ body.autumn::after {
 .section-reveal {
   opacity: 0;
   transform: translateY(60px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
 }
 
 .section-reveal.visible {
   transform: translateY(0);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
   opacity: 1;
 }
 
@@ -1711,12 +1789,16 @@ body.autumn::after {
 .edu-cert-column {
   opacity: 0;
   transform: translateY(50px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .edu-cert-column.visible {
   transform: translateY(0);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
   opacity: 1;
 }
 
@@ -1732,12 +1814,16 @@ body.autumn::after {
 .skill-category {
   opacity: 0;
   transform: translateY(50px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .skill-category.visible {
   transform: translateY(0);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
   opacity: 1;
 }
 
@@ -1753,12 +1839,16 @@ body.autumn::after {
 .project-card {
   opacity: 0;
   transform: translateY(50px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .project-card.visible {
   transform: translateY(0);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
   opacity: 1;
 }
 
@@ -1784,7 +1874,9 @@ body.autumn::after {
 .section-title {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .section-title.visible {
@@ -1927,7 +2019,9 @@ body.autumn::after {
 .scroll-reveal {
   opacity: 0;
   transform: translateY(50px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
 }
 
 .scroll-reveal.visible {

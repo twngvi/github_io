@@ -58,7 +58,7 @@ const observer = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.5 }
+  { threshold: 0.5 },
 );
 
 sections.forEach((section) => observer.observe(section));
@@ -66,14 +66,10 @@ sections.forEach((section) => observer.observe(section));
 // Arc Projects with Rotation - Ferris Wheel Mechanic
 let currentIndex = 0;
 let currentRotation = 0;
-const totalProjects = 3;
 let isRotating = false;
 
-const projectTitles = [
-  "Beauty LittleFish",
-  "Weather App",
-  "Quiz Flashcard App",
-];
+const projectTitles = ["Beauty LittleFish", "Quiz Flashcard App"];
+const totalProjects = projectTitles.length;
 
 function showArcProject(index) {
   // Update active state for text descriptions
@@ -154,7 +150,7 @@ function sendEmail(event) {
   const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
 
   window.location.href = `mailto:truongtuongvi5804@gmail.com?subject=${encodeURIComponent(
-    subject
+    subject,
   )}&body=${body}`;
 
   alert("🎨 Cảm ơn bạn đã liên hệ! Email client sẽ được mở.");
