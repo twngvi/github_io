@@ -129,7 +129,10 @@
           <div class="avatar-container">
             <div class="avatar-ring"></div>
             <div class="avatar">
-              <img src="./anhcv.jpg" alt="Trương Tường Vi" />
+              <img
+                src="./images/anhcv.jpg"
+                alt="Trương Tường Vi, a software engineering student, smiling at the camera in a professional portrait setting"
+              />
             </div>
           </div>
         </div>
@@ -139,41 +142,55 @@
     <!-- Education & Certificates Section -->
     <section id="education">
       <div class="container">
-        <h2 class="section-title">Học vấn & Chứng chỉ</h2>
-        <div class="edu-cert-grid">
-          <div class="edu-cert-column">
-            <h3>Học vấn</h3>
-            <div class="timeline-container">
-              <div class="timeline-line"></div>
-              <div class="timeline-card">
-                <span class="timeline-period">2022 - 2026</span>
-                <h3>Đại học Nguyễn Tất Thành</h3>
-                <p><strong>Khoa:</strong> Công nghệ Thông tin</p>
-                <p><strong>Ngành:</strong> Kỹ sư Phần mềm</p>
-                <p><strong>GPA:</strong> 3.8 / 4.0</p>
-              </div>
-            </div>
-          </div>
+        <h2 class="section-title section-title-education">
+          Học vấn & Chứng chỉ
+        </h2>
+        <div class="education-hanging-wrap">
+          <div class="edu-hanging-stack">
+            <article class="hanging-board">
+              <p class="board-line1">Đại học Nguyễn Tất Thành</p>
+              <p class="board-line2">
+                Kỹ sư Phần mềm - Khoa Công nghệ Thông tin
+              </p>
+              <p class="board-line3">Niên khóa 2022 - 2026 | GPA: 3.8 / 4.0</p>
+            </article>
 
-          <div class="edu-cert-column">
-            <h3>Chứng chỉ</h3>
-            <div class="timeline-container">
-              <div class="timeline-line"></div>
-              <div class="timeline-card">
-                <span class="timeline-period">2025</span>
-                <h4>Google IT Support Professional Certificate</h4>
-              </div>
-              <div class="timeline-card">
-                <span class="timeline-period">2025</span>
-                <h4>
-                  Google Cloud Skill Badge: Derive Insights from BigQuery Data
-                </h4>
-              </div>
-              <div class="timeline-card">
-                <span class="timeline-period">2025</span>
-                <h4>Microsoft Office Specialist (MOS)</h4>
-              </div>
+            <div class="board-connector" aria-hidden="true">
+              <span></span>
+              <span></span>
             </div>
+
+            <article class="hanging-board">
+              <p class="board-line1">Google</p>
+              <p class="board-line2">
+                Google IT Support Professional Certificate
+              </p>
+              <p class="board-line3">Cấp năm 2025</p>
+            </article>
+
+            <div class="board-connector" aria-hidden="true">
+              <span></span>
+              <span></span>
+            </div>
+
+            <article class="hanging-board">
+              <p class="board-line1">Google Cloud</p>
+              <p class="board-line2">
+                Skill Badge: Derive Insights from BigQuery Data
+              </p>
+              <p class="board-line3">Cấp năm 2025</p>
+            </article>
+
+            <div class="board-connector" aria-hidden="true">
+              <span></span>
+              <span></span>
+            </div>
+
+            <article class="hanging-board">
+              <p class="board-line1">Microsoft</p>
+              <p class="board-line2">Microsoft Office Specialist (MOS)</p>
+              <p class="board-line3">Cấp năm 2025</p>
+            </article>
           </div>
         </div>
       </div>
@@ -248,34 +265,210 @@
       <div class="container">
         <h2 class="section-title">Dự án</h2>
         <div class="projects-wrapper">
-          <div class="projects-card-grid">
-            <!-- Project 1 -->
-            <div class="project-card">
-              <div class="project-icon"><i class="fas fa-fish"></i></div>
-              <div class="project-title">Beauty LittleFish</div>
-              <div class="project-role">Team Leader & Full-stack Developer</div>
-              <div class="project-time">07/2025 - 12/2025</div>
-              <div class="project-desc">
-                Web Thương mại Điện tử - Dự án học thuật (6 Member Team)
+          <div class="projects-split-layout">
+            <div
+              class="littlefish-gallery-panel"
+              aria-label="Gallery ảnh dự án LittleFish"
+            >
+              <button
+                type="button"
+                class="carousel-nav prev"
+                data-lf-prev
+                aria-label="Ảnh trước"
+              >
+                <i class="fas fa-chevron-left"></i>
+              </button>
+
+              <div class="littlefish-stage">
+                <figure class="lf-image-card" data-lf-index="0">
+                  <img
+                    src="./images/LittleFish/126962031438264350512.jpg"
+                    alt="Ảnh dự án LittleFish 01"
+                  />
+                </figure>
+                <figure class="lf-image-card" data-lf-index="1">
+                  <img
+                    src="./images/LittleFish/31361382703354435724.jpg"
+                    alt="Ảnh dự án LittleFish 02"
+                  />
+                </figure>
+                <figure class="lf-image-card" data-lf-index="2">
+                  <img
+                    src="./images/LittleFish/31361382703354435727.jpg"
+                    alt="Ảnh dự án LittleFish 03"
+                  />
+                </figure>
+                <figure class="lf-image-card" data-lf-index="3">
+                  <img
+                    src="./images/LittleFish/31361382703354435728.jpg"
+                    alt="Ảnh dự án LittleFish 04"
+                  />
+                </figure>
+                <figure class="lf-image-card" data-lf-index="4">
+                  <img
+                    src="./images/LittleFish/37518677369967932841.jpg"
+                    alt="Ảnh dự án LittleFish 05"
+                  />
+                </figure>
+                <figure class="lf-image-card" data-lf-index="5">
+                  <img
+                    src="./images/LittleFish/375186773699679328410.jpg"
+                    alt="Ảnh dự án LittleFish 06"
+                  />
+                </figure>
+                <figure class="lf-image-card" data-lf-index="6">
+                  <img
+                    src="./images/LittleFish/375186773699679328411.jpg"
+                    alt="Ảnh dự án LittleFish 07"
+                  />
+                </figure>
+                <figure class="lf-image-card" data-lf-index="7">
+                  <img
+                    src="./images/LittleFish/375186773699679328413.jpg"
+                    alt="Ảnh dự án LittleFish 08"
+                  />
+                </figure>
+                <figure class="lf-image-card" data-lf-index="8">
+                  <img
+                    src="./images/LittleFish/37518677369967932842.jpg"
+                    alt="Ảnh dự án LittleFish 09"
+                  />
+                </figure>
+                <figure class="lf-image-card" data-lf-index="9">
+                  <img
+                    src="./images/LittleFish/37518677369967932843.jpg"
+                    alt="Ảnh dự án LittleFish 10"
+                  />
+                </figure>
+                <figure class="lf-image-card" data-lf-index="10">
+                  <img
+                    src="./images/LittleFish/37518677369967932845.jpg"
+                    alt="Ảnh dự án LittleFish 11"
+                  />
+                </figure>
+                <figure class="lf-image-card" data-lf-index="11">
+                  <img
+                    src="./images/LittleFish/37518677369967932846.jpg"
+                    alt="Ảnh dự án LittleFish 12"
+                  />
+                </figure>
+                <figure class="lf-image-card" data-lf-index="12">
+                  <img
+                    src="./images/LittleFish/37518677369967932849.jpg"
+                    alt="Ảnh dự án LittleFish 13"
+                  />
+                </figure>
               </div>
-              <div class="project-tech">
-                <span class="skill-tag">ASP.NET Core 8.0</span>
-                <span class="skill-tag">SQL Server</span>
-                <span class="skill-tag">Google Analytics</span>
-                <span class="skill-tag">Mailchimp</span>
-              </div>
-              <ul class="project-detail-list">
-                <li>Thiết kế Database SQL Server (29 bảng)</li>
-                <li>Xây dựng logic xử lý Voucher/Khuyến mãi phức tạp</li>
-                <li>Triển khai SEO (Sitemap, Slug tự động)</li>
-                <li>Dẫn dắt nhóm 6 người, review code trên GitHub</li>
-                <li>Giải quyết 100% các lỗi UI/UX trước deploy</li>
-              </ul>
+
+              <button
+                type="button"
+                class="carousel-nav next"
+                data-lf-next
+                aria-label="Ảnh kế tiếp"
+              >
+                <i class="fas fa-chevron-right"></i>
+              </button>
+
+              <div class="littlefish-indicators" data-lf-indicators></div>
             </div>
+
+            <aside
+              class="littlefish-info-panel"
+              aria-label="Nội dung dự án Beauty LittleFish"
+            >
+              <article class="lf-flag-card">
+                <h3>Mô tả dự án</h3>
+                <p>
+                  Beauty LittleFish là website thương mại điện tử mỹ phẩm, tập
+                  trung vào trải nghiệm mua sắm mượt mà, quản lý dữ liệu sản
+                  phẩm rõ ràng và tối ưu hiển thị trên công cụ tìm kiếm.
+                </p>
+              </article>
+
+              <article class="lf-flag-card">
+                <h3>Chức năng chính</h3>
+                <ul>
+                  <li>
+                    Đăng ký, đăng nhập, quên mật khẩu và quản lý tài khoản người
+                    dùng.
+                  </li>
+                  <li>
+                    Hiển thị danh mục sản phẩm, chi tiết sản phẩm và biến thể
+                    sản phẩm.
+                  </li>
+                  <li>Tìm kiếm, lọc, sắp xếp sản phẩm theo nhu cầu mua sắm.</li>
+                  <li>Giỏ hàng, đặt hàng và theo dõi trạng thái đơn hàng.</li>
+                  <li>
+                    Hệ thống đánh giá sản phẩm theo số sao, nội dung và hình
+                    ảnh.
+                  </li>
+                  <li>
+                    Trang quản trị: quản lý sản phẩm, tồn kho, đơn hàng và nội
+                    dung.
+                  </li>
+                  <li>
+                    Hỗ trợ khuyến mãi, voucher và logic giảm giá theo điều kiện.
+                  </li>
+                  <li>Tối ưu SEO với slug thân thiện, metadata và sitemap.</li>
+                </ul>
+              </article>
+
+              <article class="lf-flag-card">
+                <h3>Công cụ và công nghệ sử dụng</h3>
+                <div class="lf-tech-badges">
+                  <span class="skill-tag">ASP.NET Core 8.0</span>
+                  <span class="skill-tag">Entity Framework Core</span>
+                  <span class="skill-tag">SQL Server</span>
+                  <span class="skill-tag">Razor Views</span>
+                  <span class="skill-tag">HTML</span>
+                  <span class="skill-tag">CSS</span>
+                  <span class="skill-tag">JavaScript</span>
+                  <span class="skill-tag">jQuery</span>
+                  <span class="skill-tag">Bootstrap</span>
+                  <span class="skill-tag">Google Analytics</span>
+                  <span class="skill-tag">Mailchimp</span>
+                  <span class="skill-tag">GitHub</span>
+                </div>
+              </article>
+            </aside>
           </div>
         </div>
       </div>
     </section>
+
+    <div class="lf-lightbox" id="lfLightbox" aria-hidden="true">
+      <button
+        type="button"
+        class="lf-lightbox-close"
+        id="lfLightboxClose"
+        aria-label="Đóng ảnh phóng to"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+
+      <button
+        type="button"
+        class="lf-lightbox-nav prev"
+        id="lfLightboxPrev"
+        aria-label="Ảnh trước"
+      >
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <div class="lf-lightbox-content">
+        <img id="lfLightboxImage" src="" alt="Ảnh phóng to dự án LittleFish" />
+        <div class="lf-lightbox-counter" id="lfLightboxCounter"></div>
+      </div>
+
+      <button
+        type="button"
+        class="lf-lightbox-nav next"
+        id="lfLightboxNext"
+        aria-label="Ảnh kế tiếp"
+      >
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
 
     <!-- Contact Section -->
     <section id="contact">

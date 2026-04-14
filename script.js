@@ -61,77 +61,258 @@ if (sections.length && navItems.length) {
   sections.forEach((section) => navObserver.observe(section));
 }
 
-// Arc Projects with Rotation - Ferris Wheel Mechanic
-let currentIndex = 0;
-let currentRotation = 0;
-let isRotating = false;
+// LittleFish Gallery 3D
+let activeLittleFishIndex = 0;
+let littleFishCards = [];
+let littleFishIndicators = [];
+let littleFishLocked = false;
+let littleFishImages = [];
+let littleFishLightbox = null;
+let littleFishLightboxImage = null;
+let littleFishLightboxCounter = null;
+let littleFishLightboxIndex = 0;
 
-const projectTitles = ["Beauty LittleFish", "Quiz Flashcard App"];
-const totalProjects = projectTitles.length;
+function normalizeIndex(index, length) {
+  return (index + length) % length;
+}
 
-function showArcProject(index) {
-  // Update active state for text descriptions
-  document.querySelectorAll(".project-description").forEach((detail, i) => {
-    detail.classList.toggle("active", i === index);
+function refreshLittleFishIndicators() {
+  littleFishIndicators.forEach((dot, i) => {
+    dot.classList.toggle("active", i === activeLittleFishIndex);
+  });
+}
+
+function paintLittleFishGallery() {
+  if (!littleFishCards.length) return;
+
+  const total = littleFishCards.length;
+  littleFishCards.forEach((card, i) => {
+    const relative = normalizeIndex(i - activeLittleFishIndex, total);
+    card.classList.remove("is-active", "is-left", "is-right", "is-hidden");
+
+    if (relative === 0) {
+      card.classList.add("is-active");
+      card.style.zIndex = "4";
+      return;
+    }
+
+    if (relative === 1) {
+      card.classList.add("is-right");
+      card.style.zIndex = "3";
+      return;
+    }
+
+    if (relative === total - 1) {
+      card.classList.add("is-left");
+      card.style.zIndex = "3";
+      return;
+    }
+
+    card.classList.add("is-hidden");
+    card.style.zIndex = "1";
   });
 
-  // Update active state for project items
-  document.querySelectorAll(".arc-project-item").forEach((item, i) => {
-    item.classList.toggle("active", i === index);
-  });
+  refreshLittleFishIndicators();
+}
 
-  // Update project title
-  const projectTitle = document.getElementById("projectTitle");
-  if (projectTitle) {
-    projectTitle.classList.remove("active");
-    setTimeout(() => {
-      projectTitle.textContent = projectTitles[index];
-      projectTitle.classList.add("active");
-    }, 300);
+function rotateLittleFish(direction) {
+  if (!littleFishCards.length || littleFishLocked) return;
+
+  const previousIndex = activeLittleFishIndex;
+  const total = littleFishCards.length;
+  activeLittleFishIndex = normalizeIndex(
+    activeLittleFishIndex + direction,
+    total,
+  );
+
+  const previousCard = littleFishCards[previousIndex];
+  const nextCard = littleFishCards[activeLittleFishIndex];
+
+  previousCard.classList.remove("flip-exit-left", "flip-exit-right");
+  nextCard.classList.remove("flip-enter-left", "flip-enter-right");
+
+  if (direction > 0) {
+    previousCard.classList.add("flip-exit-left");
+    nextCard.classList.add("flip-enter-right");
+  } else {
+    previousCard.classList.add("flip-exit-right");
+    nextCard.classList.add("flip-enter-left");
+  }
+
+  littleFishLocked = true;
+  paintLittleFishGallery();
+
+  setTimeout(() => {
+    littleFishCards.forEach((card) => {
+      card.classList.remove(
+        "flip-exit-left",
+        "flip-exit-right",
+        "flip-enter-left",
+        "flip-enter-right",
+      );
+    });
+    littleFishLocked = false;
+  }, 850);
+}
+
+function jumpLittleFish(index) {
+  if (
+    !littleFishCards.length ||
+    littleFishLocked ||
+    index === activeLittleFishIndex
+  ) {
+    return;
+  }
+
+  const direction = index > activeLittleFishIndex ? 1 : -1;
+  activeLittleFishIndex = normalizeIndex(index, littleFishCards.length);
+  paintLittleFishGallery();
+
+  const activeCard = littleFishCards[activeLittleFishIndex];
+  activeCard.classList.add(
+    direction > 0 ? "flip-enter-right" : "flip-enter-left",
+  );
+
+  littleFishLocked = true;
+  setTimeout(() => {
+    activeCard.classList.remove("flip-enter-right", "flip-enter-left");
+    littleFishLocked = false;
+  }, 850);
+}
+
+function updateLittleFishLightbox() {
+  if (!littleFishImages.length || !littleFishLightboxImage) return;
+
+  const currentImage = littleFishImages[littleFishLightboxIndex];
+  littleFishLightboxImage.src = currentImage.src;
+  littleFishLightboxImage.alt = currentImage.alt || "Ảnh dự án LittleFish";
+
+  if (littleFishLightboxCounter) {
+    littleFishLightboxCounter.textContent = `${littleFishLightboxIndex + 1} / ${littleFishImages.length}`;
   }
 }
 
-function navigateArcProject(direction) {
-  if (isRotating) return;
+function openLittleFishLightbox(index) {
+  if (!littleFishLightbox || !littleFishImages.length) return;
 
-  isRotating = true;
-
-  // Calculate new index (content display)
-  currentIndex = (currentIndex + direction + totalProjects) % totalProjects;
-
-  // Calculate rotation angle (visual effect)
-  // Each click rotates 120 degrees (360 / 3 items)
-  // direction = 1 (Next) => rotate counter-clockwise (push right item up)
-  // direction = -1 (Prev) => rotate clockwise
-  currentRotation -= direction * 120;
-
-  // Apply to DOM
-  updateWheel(currentIndex, currentRotation);
-
-  // Allow next rotation after animation completes
-  setTimeout(() => {
-    isRotating = false;
-  }, 1000);
+  littleFishLightboxIndex = normalizeIndex(index, littleFishImages.length);
+  updateLittleFishLightbox();
+  littleFishLightbox.classList.add("open");
+  littleFishLightbox.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
 }
 
-function updateWheel(index, rotation) {
-  const wheel = document.getElementById("arcProjects");
-  const items = document.querySelectorAll(".arc-project-item");
+function closeLittleFishLightbox() {
+  if (!littleFishLightbox) return;
 
-  // Rotate main axis (Container)
-  wheel.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+  littleFishLightbox.classList.remove("open");
+  littleFishLightbox.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
 
-  // Counter-rotate child items to keep icons upright
-  // Like Ferris Wheel cabins
-  items.forEach((item) => {
-    const icon = item.querySelector(".arc-project-icon");
-    if (icon) {
-      icon.style.transform = `rotate(${-rotation}deg)`;
+function navigateLittleFishLightbox(direction) {
+  if (!littleFishImages.length) return;
+
+  littleFishLightboxIndex = normalizeIndex(
+    littleFishLightboxIndex + direction,
+    littleFishImages.length,
+  );
+  updateLittleFishLightbox();
+
+  activeLittleFishIndex = littleFishLightboxIndex;
+  paintLittleFishGallery();
+}
+
+function setupLittleFishLightbox() {
+  littleFishLightbox = document.getElementById("lfLightbox");
+  littleFishLightboxImage = document.getElementById("lfLightboxImage");
+  littleFishLightboxCounter = document.getElementById("lfLightboxCounter");
+
+  if (!littleFishLightbox || !littleFishCards.length) return;
+
+  littleFishImages = littleFishCards
+    .map((card) => card.querySelector("img"))
+    .filter(Boolean);
+
+  littleFishImages.forEach((image, i) => {
+    image.addEventListener("click", () => openLittleFishLightbox(i));
+  });
+
+  const closeBtn = document.getElementById("lfLightboxClose");
+  const prevBtn = document.getElementById("lfLightboxPrev");
+  const nextBtn = document.getElementById("lfLightboxNext");
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeLittleFishLightbox);
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => navigateLittleFishLightbox(-1));
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => navigateLittleFishLightbox(1));
+  }
+
+  littleFishLightbox.addEventListener("click", (e) => {
+    if (e.target === littleFishLightbox) {
+      closeLittleFishLightbox();
     }
   });
 
-  // Show content
-  showArcProject(index);
+  document.addEventListener("keydown", (e) => {
+    if (!littleFishLightbox.classList.contains("open")) return;
+
+    if (e.key === "Escape") {
+      closeLittleFishLightbox();
+      return;
+    }
+
+    if (e.key === "ArrowLeft") {
+      navigateLittleFishLightbox(-1);
+      return;
+    }
+
+    if (e.key === "ArrowRight") {
+      navigateLittleFishLightbox(1);
+    }
+  });
+}
+
+function setupProjectCarousel() {
+  const gallery = document.querySelector(".littlefish-gallery-panel");
+  if (!gallery) return;
+
+  littleFishCards = Array.from(gallery.querySelectorAll(".lf-image-card"));
+  if (!littleFishCards.length) return;
+
+  const prevBtn = gallery.querySelector("[data-lf-prev]");
+  const nextBtn = gallery.querySelector("[data-lf-next]");
+  const indicatorsWrap = gallery.querySelector("[data-lf-indicators]");
+
+  if (indicatorsWrap) {
+    indicatorsWrap.innerHTML = "";
+    littleFishIndicators = littleFishCards.map((_, i) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "carousel-indicator";
+      dot.setAttribute("aria-label", `Xem ảnh dự án ${i + 1}`);
+      dot.addEventListener("click", () => jumpLittleFish(i));
+      indicatorsWrap.appendChild(dot);
+      return dot;
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => rotateLittleFish(-1));
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => rotateLittleFish(1));
+  }
+
+  paintLittleFishGallery();
+  setupLittleFishLightbox();
 }
 
 // Form Submission
@@ -172,6 +353,28 @@ const animateOnScroll = () => {
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight * 0.85 && rect.bottom > 0) {
       el.classList.add("visible");
+    } else {
+      el.classList.remove("visible");
+    }
+  });
+
+  // Animate Hanging Education Stack
+  document.querySelectorAll(".edu-hanging-stack").forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.85 && rect.bottom > 0) {
+      el.classList.add("visible");
+    } else {
+      el.classList.remove("visible");
+    }
+  });
+
+  // Animate Hanging Boards with stagger
+  document.querySelectorAll(".hanging-board").forEach((el, index) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.88 && rect.bottom > 0) {
+      setTimeout(() => {
+        el.classList.add("visible");
+      }, index * 110);
     } else {
       el.classList.remove("visible");
     }
@@ -304,13 +507,7 @@ window.addEventListener("load", () => {
   // Start subtitle typing effect
   setTimeout(typeSubtitle, 1500);
 
-  // Initialize project wheel (nếu còn dùng)
-  if (typeof showArcProject === "function") {
-    showArcProject(0);
-  }
-  if (typeof updateWheel === "function") {
-    updateWheel(0, 0);
-  }
+  setupProjectCarousel();
 });
 
 // Close theme switcher when clicking outside
