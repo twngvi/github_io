@@ -631,6 +631,43 @@ section {
   background: var(--bg-secondary);
 }
 
+.education-split-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1.15fr);
+  gap: 46px;
+  align-items: start;
+  margin-top: 6px;
+}
+
+.education-heading-panel {
+  position: sticky;
+  top: 112px;
+}
+
+.education-main-title {
+  text-align: left;
+  font-size: clamp(4.4rem, 10vw, 8.6rem);
+  line-height: 0.95;
+  margin: 0;
+}
+
+.education-main-title span {
+  display: block;
+  font-size: clamp(3rem, 6.2vw, 4.8rem);
+  line-height: 1.05;
+  margin-top: 10px;
+}
+
+.section-title.section-title-education.education-main-title::after {
+  margin: 20px 0 0;
+  width: 140px;
+  transform-origin: left center;
+}
+
+.education-content-panel {
+  min-width: 0;
+}
+
 .edu-cert-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -839,6 +876,40 @@ section {
   font-size: 1rem;
   line-height: 1.6;
   transition: all 0.3s ease;
+}
+
+.projects-revealed .projects-split-layout::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.projects-revealed .littlefish-gallery-panel,
+.projects-revealed .littlefish-info-panel {
+  opacity: 1;
+  transform: none;
+}
+
+.projects-revealed .lf-flag-card {
+  opacity: 1;
+  transform: none;
+}
+
+.projects-revealed .lf-flag-card:nth-child(1) {
+  transition-delay: 0.18s;
+}
+
+.projects-revealed .lf-flag-card:nth-child(2) {
+  transition-delay: 0.34s;
+}
+
+.projects-revealed .lf-flag-card:nth-child(3) {
+  transition-delay: 0.5s;
+}
+
+.projects-revealed .lf-flag-card:nth-child(1),
+.projects-revealed .lf-flag-card:nth-child(2),
+.projects-revealed .lf-flag-card:nth-child(3) {
+  transform: translateX(0) rotateY(0deg) scale(1);
 }
 
 .soft-skill-item:hover {
@@ -1354,6 +1425,29 @@ section {
 
 /* Responsive cho contact cards */
 @media (max-width: 768px) {
+  .education-split-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .education-heading-panel {
+    position: static;
+  }
+
+  .education-main-title {
+    text-align: center;
+    font-size: clamp(2.3rem, 10vw, 3.6rem);
+  }
+
+  .education-main-title span {
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+  }
+
+  .section-title.section-title-education.education-main-title::after {
+    margin: 14px auto 0;
+    transform-origin: center center;
+  }
+
   .edu-cert-grid {
     grid-template-columns: 1fr;
     gap: 30px;
@@ -1995,15 +2089,17 @@ body.autumn::after {
 /* ===== EDUCATION - HANGING BOARDS ===== */
 .education-hanging-wrap {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: -8px;
 }
 
 .edu-hanging-stack {
-  width: min(900px, 100%);
+  width: 100%;
+  max-width: 920px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 48px;
+  align-items: stretch;
   transform-origin: top center;
   transition: transform 0.3s ease;
   opacity: 0;
@@ -2015,26 +2111,16 @@ body.autumn::after {
   transform: translateY(0);
 }
 
-.education-hanging-wrap:hover .edu-hanging-stack {
-  animation: boardSway 1.8s ease-in-out infinite;
-}
-
-@keyframes boardSway {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(0.65deg);
-  }
-  75% {
-    transform: rotate(-0.65deg);
-  }
-}
-
 .hanging-board {
+  --rope-offset: clamp(46px, 9%, 84px);
+  --left-rope-length: 40px;
+  --right-rope-length: 40px;
+  --left-rope-angle: 0deg;
+  --right-rope-angle: 0deg;
+  --board-shift: 0px;
+  --board-tilt: 0deg;
   position: relative;
-  width: min(860px, 100%);
+  width: 100%;
   background: linear-gradient(
     145deg,
     var(--bg-card),
@@ -2045,10 +2131,15 @@ body.autumn::after {
   padding: 18px 22px;
   box-shadow: 0 12px 28px var(--shadow);
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(-120px) rotate(-1.4deg);
+  transform-origin: top center;
+  cursor: pointer;
+  touch-action: manipulation;
+  overflow: visible;
+  will-change: transform;
   transition:
     opacity 0.45s ease,
-    transform 0.45s ease,
+    transform 0.35s ease,
     border-color 0.25s ease,
     box-shadow 0.25s ease;
 }
@@ -2058,9 +2149,117 @@ body.autumn::after {
   transform: translateY(0);
 }
 
+.hanging-board.reveal-once {
+  animation: boardDropIn 1.28s cubic-bezier(0.18, 0.88, 0.24, 1);
+}
+
+.hanging-board.visible.bounce-left,
+.hanging-board.visible.bounce-right {
+  transform: translateX(var(--board-shift)) rotate(var(--board-tilt));
+  animation: boardBounce 420ms cubic-bezier(0.2, 0.85, 0.25, 1);
+}
+
+.board-rope {
+  position: absolute;
+  top: calc(-1 * var(--rope-length, 40px));
+  width: 4px;
+  height: var(--rope-length, 40px);
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    rgba(226, 232, 240, 0.15),
+    rgba(226, 232, 240, 0.85)
+  );
+  box-shadow: 0 0 12px rgba(226, 232, 240, 0.12);
+  opacity: 0;
+  transform-origin: bottom center;
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    top 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.hanging-board.visible .board-rope {
+  opacity: 1;
+  transition-delay: 0.16s;
+}
+
+.board-rope-left {
+  left: var(--rope-offset);
+  --rope-length: var(--left-rope-length);
+  transform: translateX(-50%) rotate(var(--left-rope-angle));
+}
+
+.board-rope-right {
+  right: var(--rope-offset);
+  --rope-length: var(--right-rope-length);
+  transform: translateX(50%) rotate(var(--right-rope-angle));
+}
+
+.hanging-board.visible .board-rope-left {
+  transform: translateX(-50%) rotate(var(--left-rope-angle));
+}
+
+.hanging-board.visible .board-rope-right {
+  transform: translateX(50%) rotate(var(--right-rope-angle));
+}
+
 .hanging-board:hover {
   border-color: var(--accent-primary);
   box-shadow: 0 18px 34px var(--accent-glow);
+}
+
+.hanging-board.is-tilted {
+  border-color: var(--accent-primary);
+  box-shadow: 0 22px 40px var(--accent-glow);
+}
+
+.hanging-board.bounce-left {
+  --board-shift: -14px;
+  --board-tilt: -1.8deg;
+  --left-rope-length: 54px;
+  --right-rope-length: 34px;
+  --left-rope-angle: -10deg;
+  --right-rope-angle: 8deg;
+}
+
+.hanging-board.bounce-right {
+  --board-shift: 14px;
+  --board-tilt: 1.8deg;
+  --left-rope-length: 34px;
+  --right-rope-length: 54px;
+  --left-rope-angle: -8deg;
+  --right-rope-angle: 10deg;
+}
+
+@keyframes boardDropIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-130px) rotate(-2.4deg);
+  }
+  65% {
+    opacity: 1;
+    transform: translateY(10px) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes boardBounce {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  45% {
+    transform: translateX(var(--board-shift))
+      rotate(calc(var(--board-tilt) * 1.4));
+  }
+  100% {
+    transform: translateX(var(--board-shift)) rotate(var(--board-tilt));
+  }
 }
 
 .hanging-board::before,
@@ -2076,11 +2275,13 @@ body.autumn::after {
 }
 
 .hanging-board::before {
-  left: 24px;
+  left: var(--rope-offset);
+  transform: translateX(-50%);
 }
 
 .hanging-board::after {
-  right: 24px;
+  right: var(--rope-offset);
+  transform: translateX(50%);
 }
 
 .board-line1 {
@@ -2102,29 +2303,39 @@ body.autumn::after {
   font-weight: 700;
 }
 
-.board-connector {
-  height: 34px;
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  gap: 18px;
-}
-
-.board-connector span {
-  display: block;
-  width: 4px;
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(var(--text-secondary), var(--text-primary));
-  opacity: 0.75;
-}
-
 /* ===== PROJECTS CARD GRID ===== */
 .projects-split-layout {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(340px, 1fr) minmax(420px, 1fr);
   gap: 34px;
   align-items: stretch;
+  perspective: 1600px;
+}
+
+.projects-split-layout::before {
+  content: "";
+  position: absolute;
+  left: calc(50% - 1.5px);
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(56, 189, 248, 0),
+    var(--accent-primary),
+    rgba(56, 189, 248, 0)
+  );
+  box-shadow: 0 0 18px var(--accent-glow);
+  opacity: 0;
+  transform: scaleY(0.15);
+  transform-origin: center;
+  transition:
+    opacity 0.45s ease,
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .littlefish-gallery-panel {
@@ -2139,6 +2350,13 @@ body.autumn::after {
   padding: 16px 72px 64px;
   perspective: 1800px;
   box-shadow: 0 14px 36px var(--shadow);
+  opacity: 0;
+  transform: translateX(-40px) rotateY(58deg) scale(0.96);
+  transform-origin: right center;
+  transition:
+    opacity 0.85s ease,
+    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1;
 }
 
 .littlefish-stage {
@@ -2342,6 +2560,13 @@ body.autumn::after {
   flex-direction: column;
   gap: 18px;
   padding-left: 26px;
+  opacity: 0;
+  transform: translateX(40px) rotateY(-58deg) scale(0.96);
+  transform-origin: left center;
+  transition:
+    opacity 0.85s ease,
+    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1;
 }
 
 .littlefish-info-panel::before {
@@ -2366,6 +2591,14 @@ body.autumn::after {
   border-radius: 14px;
   padding: 18px 18px 18px 20px;
   box-shadow: 0 10px 25px var(--shadow);
+  opacity: 0;
+  transform-origin: left center;
+  transform: translateX(52px) rotateY(-78deg) scale(0.94);
+  transition:
+    opacity 0.75s ease,
+    transform 0.95s cubic-bezier(0.2, 0.85, 0.2, 1),
+    box-shadow 0.3s ease;
+  backface-visibility: hidden;
 }
 
 .lf-flag-card::before {
@@ -2539,13 +2772,21 @@ body.autumn::after {
     margin-top: 12px;
   }
 
-  .board-connector {
-    height: 24px;
-    gap: 14px;
+  .education-main-title {
+    font-size: clamp(2.7rem, 11vw, 4.1rem);
+  }
+
+  .education-main-title span {
+    font-size: clamp(1.9rem, 7vw, 2.8rem);
   }
 
   .hanging-board {
+    --rope-offset: 34px;
     padding: 14px 14px;
+  }
+
+  .edu-hanging-stack {
+    gap: 30px;
   }
 
   .board-line1 {

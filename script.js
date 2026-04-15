@@ -71,6 +71,9 @@ let littleFishLightbox = null;
 let littleFishLightboxImage = null;
 let littleFishLightboxCounter = null;
 let littleFishLightboxIndex = 0;
+let activeHangingBoard = null;
+let activeHangingBoardSide = null;
+let projectsRevealTriggered = false;
 
 function normalizeIndex(index, length) {
   return (index + length) % length;
@@ -315,6 +318,69 @@ function setupProjectCarousel() {
   setupLittleFishLightbox();
 }
 
+function clearHangingBoardTilt() {
+  if (activeHangingBoard) {
+    activeHangingBoard.classList.remove(
+      "is-tilted",
+      "bounce-left",
+      "bounce-right",
+    );
+    activeHangingBoard = null;
+  }
+
+  activeHangingBoardSide = null;
+}
+
+function setHangingBoardTilt(board, direction) {
+  if (!board) return;
+
+  if (activeHangingBoard !== board) {
+    clearHangingBoardTilt();
+  }
+
+  const nextClass = direction === "left" ? "bounce-left" : "bounce-right";
+  const previousClass = direction === "left" ? "bounce-right" : "bounce-left";
+
+  if (activeHangingBoardSide !== direction) {
+    board.classList.remove(previousClass, nextClass);
+    void board.offsetWidth;
+  }
+
+  board.classList.remove(previousClass);
+  board.classList.add("is-tilted", nextClass);
+
+  activeHangingBoard = board;
+  activeHangingBoardSide = direction;
+}
+
+function setupHangingBoardInteractions() {
+  const boards = document.querySelectorAll(".hanging-board");
+  if (!boards.length) return;
+
+  const directionFromPointer = (board, clientX) => {
+    const rect = board.getBoundingClientRect();
+    return clientX <= rect.left + rect.width / 2 ? "left" : "right";
+  };
+
+  boards.forEach((board) => {
+    board.addEventListener("mouseenter", (event) => {
+      const direction = directionFromPointer(board, event.clientX);
+      setHangingBoardTilt(board, direction);
+    });
+
+    board.addEventListener("mousemove", (event) => {
+      const direction = directionFromPointer(board, event.clientX);
+      setHangingBoardTilt(board, direction);
+    });
+
+    board.addEventListener("mouseleave", () => {
+      if (activeHangingBoard === board) {
+        clearHangingBoardTilt();
+      }
+    });
+  });
+}
+
 // Form Submission
 function sendEmail(event) {
   event.preventDefault();
@@ -343,6 +409,14 @@ const animateOnScroll = () => {
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight * 0.9 && rect.bottom > 0) {
       el.classList.add("visible");
+
+      if (
+        el.classList.contains("education-main-title") &&
+        !educationTypingStarted
+      ) {
+        educationTypingStarted = true;
+        setTimeout(typeEducationTitle, 550);
+      }
     } else {
       el.classList.remove("visible");
     }
@@ -371,13 +445,32 @@ const animateOnScroll = () => {
   // Animate Hanging Boards with stagger
   document.querySelectorAll(".hanging-board").forEach((el, index) => {
     const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.88 && rect.bottom > 0) {
-      setTimeout(() => {
-        el.classList.add("visible");
-      }, index * 110);
-    } else {
-      el.classList.remove("visible");
+    const isInView = rect.top < window.innerHeight * 0.88 && rect.bottom > 0;
+
+    if (!isInView) {
+      return;
     }
+
+    if (el.dataset.revealed === "true") {
+      el.classList.add("visible");
+      return;
+    }
+
+    if (el.dataset.revealQueued === "true") {
+      return;
+    }
+
+    el.dataset.revealQueued = "true";
+    setTimeout(() => {
+      el.classList.add("visible", "reveal-once");
+      el.dataset.revealed = "true";
+      el.dataset.revealQueued = "false";
+
+      // Remove the one-time animation class after initial drop-in is finished.
+      setTimeout(() => {
+        el.classList.remove("reveal-once");
+      }, 1320);
+    }, index * 340);
   });
 
   // Animate Timeline Cards
@@ -403,14 +496,16 @@ const animateOnScroll = () => {
   });
 
   // Animate Project Cards
-  document.querySelectorAll(".project-card").forEach((el) => {
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.85 && rect.bottom > 0) {
-      el.classList.add("visible");
-    } else {
-      el.classList.remove("visible");
+  const projectsWrapper = document.querySelector(".projects-wrapper");
+  if (projectsWrapper) {
+    const rect = projectsWrapper.getBoundingClientRect();
+    const isInView = rect.top < window.innerHeight * 0.8 && rect.bottom > 0;
+
+    if (isInView && !projectsRevealTriggered) {
+      projectsRevealTriggered = true;
+      projectsWrapper.classList.add("projects-revealed");
     }
-  });
+  }
 
   // Animate Contact Section
   const contactSection = document.getElementById("contact");
@@ -453,6 +548,45 @@ const subtitleText = "Web Developer Intern (Full-stack)";
 let subtitleIndex = 0;
 let isDeleting = false;
 let typingSpeed = 100;
+
+const educationTitleLine1 = "Học vấn";
+const educationTitleLine2 = "& Chứng chỉ";
+let educationTypingStarted = false;
+
+function typeEducationTitle() {
+  const line1Element = document.getElementById("educationTypingLine1");
+  const line2Element = document.getElementById("educationTypingLine2");
+
+  if (!line1Element || !line2Element) return;
+
+  let line1Index = 0;
+  let line2Index = 0;
+
+  const typeLine1 = () => {
+    line1Index += 1;
+    line1Element.textContent = educationTitleLine1.slice(0, line1Index);
+
+    if (line1Index < educationTitleLine1.length) {
+      setTimeout(typeLine1, 150);
+      return;
+    }
+
+    setTimeout(typeLine2, 900);
+  };
+
+  const typeLine2 = () => {
+    line2Index += 1;
+    line2Element.textContent = educationTitleLine2.slice(0, line2Index);
+
+    if (line2Index < educationTitleLine2.length) {
+      setTimeout(typeLine2, 150);
+    }
+  };
+
+  line1Element.textContent = "";
+  line2Element.textContent = "";
+  typeLine1();
+}
 
 function typeSubtitle() {
   const subtitleElement = document.getElementById("subtitleTyping");
@@ -508,6 +642,7 @@ window.addEventListener("load", () => {
   setTimeout(typeSubtitle, 1500);
 
   setupProjectCarousel();
+  setupHangingBoardInteractions();
 });
 
 // Close theme switcher when clicking outside
