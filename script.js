@@ -1,40 +1,3 @@
-// Theme Switcher
-let currentTheme = "winter";
-let themeSwitcherOpen = false;
-
-function toggleThemeSwitcher() {
-  const switcher = document.querySelector(".theme-switcher");
-  const toggleBtn = document.querySelector(".theme-toggle-btn i");
-
-  themeSwitcherOpen = !themeSwitcherOpen;
-
-  if (themeSwitcherOpen) {
-    switcher.classList.remove("collapsed");
-    toggleBtn.style.transform = "rotate(180deg)";
-  } else {
-    switcher.classList.add("collapsed");
-    toggleBtn.style.transform = "rotate(0deg)";
-  }
-}
-
-function changeTheme(theme) {
-  currentTheme = theme;
-  document.body.className = theme;
-
-  // Update active button
-  document.querySelectorAll(".theme-btn").forEach((btn) => {
-    btn.classList.remove("active");
-  });
-  document.querySelector(`.theme-btn.${theme}`).classList.add("active");
-
-  // Auto close theme switcher after selection
-  setTimeout(() => {
-    if (themeSwitcherOpen) {
-      toggleThemeSwitcher();
-    }
-  }, 300);
-}
-
 // Navigation
 function scrollToSection(sectionId) {
   document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
@@ -626,9 +589,6 @@ window.addEventListener("load", () => {
   // Trigger animation check ngay khi load
   setTimeout(animateOnScroll, 100);
 
-  // Set Winter theme as default to match initial active button
-  changeTheme("winter");
-
   // Reset typing animation on page load
   const h1Element = document.querySelector(".home-info h1");
   if (h1Element) {
@@ -643,12 +603,4 @@ window.addEventListener("load", () => {
 
   setupProjectCarousel();
   setupHangingBoardInteractions();
-});
-
-// Close theme switcher when clicking outside
-document.addEventListener("click", (e) => {
-  const switcher = document.querySelector(".theme-switcher");
-  if (!switcher.contains(e.target) && themeSwitcherOpen) {
-    toggleThemeSwitcher();
-  }
 });
