@@ -2235,28 +2235,8 @@ body.autumn::after {
 }
 
 .projects-split-layout::before {
-  content: "";
-  position: absolute;
-  left: calc(50% - 1.5px);
-  top: 6px;
-  bottom: 6px;
-  width: 3px;
-  border-radius: 999px;
-  background: linear-gradient(
-    180deg,
-    rgba(56, 189, 248, 0),
-    var(--accent-primary),
-    rgba(56, 189, 248, 0)
-  );
-  box-shadow: 0 0 18px var(--accent-glow);
-  opacity: 0;
-  transform: scaleY(0.15);
-  transform-origin: center;
-  transition:
-    opacity 0.45s ease,
-    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-  z-index: 0;
+  content: none;
+  display: none;
 }
 
 .littlefish-gallery-panel {
@@ -2280,11 +2260,44 @@ body.autumn::after {
   z-index: 1;
 }
 
+.project-switch-header {
+  margin-bottom: 14px;
+  text-align: center;
+  user-select: none;
+}
+
+.project-switch-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 5px 10px;
+  margin-bottom: 8px;
+}
+
+.project-switch-title {
+  font-size: 1.35rem;
+  color: var(--accent-primary);
+  margin: 0;
+  line-height: 1.25;
+  transition:
+    opacity 0.24s ease,
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .littlefish-stage {
   position: relative;
-  height: 580px;
+  height: 540px;
   transform-style: preserve-3d;
   overflow: hidden;
+  transition:
+    opacity 0.24s ease,
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .lf-image-card {
@@ -2409,11 +2422,9 @@ body.autumn::after {
 }
 
 .carousel-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
+  position: static;
+  width: 42px;
+  height: 42px;
   border: 2px solid var(--accent-primary);
   border-radius: 50%;
   background: var(--bg-card);
@@ -2431,30 +2442,32 @@ body.autumn::after {
     box-shadow 0.2s ease;
 }
 
-.carousel-nav.prev {
-  left: 12px;
-}
-
-.carousel-nav.next {
-  right: 12px;
-}
-
 .carousel-nav:hover {
   background: var(--accent-primary);
   color: white;
-  transform: translateY(-50%) scale(1.08);
+  transform: scale(1.08);
   box-shadow: 0 10px 24px var(--accent-glow);
 }
 
-.littlefish-indicators {
+.project-carousel-controls {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 18px;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  z-index: 8;
+}
+
+.littlefish-indicators {
+  position: static;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  min-height: 42px;
 }
 
 .carousel-indicator {
@@ -2488,6 +2501,125 @@ body.autumn::after {
     opacity 0.85s ease,
     transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 1;
+}
+
+.projects-wrapper.is-project-switching .carousel-nav,
+.projects-wrapper.is-project-switching .carousel-indicator {
+  pointer-events: none;
+}
+
+.projects-wrapper.is-project-switching.swap-next .project-switch-title {
+  animation: projectTitleSwapNext 0.84s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.projects-wrapper.is-project-switching.swap-next .littlefish-info-panel {
+  animation: projectInfoSwapNext 0.84s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.projects-wrapper.is-project-switching.swap-next .littlefish-stage {
+  animation: projectStageSwapNext 0.84s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.projects-wrapper.is-project-switching.swap-prev .project-switch-title {
+  animation: projectTitleSwapPrev 0.84s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.projects-wrapper.is-project-switching.swap-prev .littlefish-info-panel {
+  animation: projectInfoSwapPrev 0.84s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.projects-wrapper.is-project-switching.swap-prev .littlefish-stage {
+  animation: projectStageSwapPrev 0.84s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes projectTitleSwapNext {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes projectTitleSwapPrev {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes projectInfoSwapNext {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes projectInfoSwapPrev {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes projectStageSwapNext {
+  0% {
+    opacity: 1;
+    transform: translateX(0) rotateY(0deg);
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(-24px) rotateY(540deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotateY(1080deg);
+  }
+}
+
+@keyframes projectStageSwapPrev {
+  0% {
+    opacity: 1;
+    transform: translateX(0) rotateY(0deg);
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(24px) rotateY(-540deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotateY(-1080deg);
+  }
 }
 
 .littlefish-info-panel::before {
@@ -2723,8 +2855,12 @@ body.autumn::after {
     padding: 12px 10px 66px;
   }
 
+  .project-switch-title {
+    font-size: 1.08rem;
+  }
+
   .littlefish-stage {
-    height: 430px;
+    height: 390px;
   }
 
   .lf-image-card,
@@ -2749,23 +2885,22 @@ body.autumn::after {
   }
 
   .carousel-nav {
-    top: auto;
-    bottom: 14px;
-    transform: none;
-    width: 44px;
-    height: 44px;
-  }
-
-  .carousel-nav.prev {
-    left: calc(50% - 62px);
-  }
-
-  .carousel-nav.next {
-    right: calc(50% - 62px);
+    width: 40px;
+    height: 40px;
   }
 
   .carousel-nav:hover {
     transform: scale(1.05);
+  }
+
+  .project-carousel-controls {
+    bottom: 10px;
+    gap: 8px;
+  }
+
+  .littlefish-indicators {
+    min-height: 40px;
+    gap: 6px;
   }
 
   .littlefish-info-panel {

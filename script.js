@@ -24,22 +24,130 @@ if (sections.length && navItems.length) {
   sections.forEach((section) => navObserver.observe(section));
 }
 
-// LittleFish Gallery 3D
+// Projects + Gallery
+const projectCatalog = [
+  {
+    id: "littlefish",
+    title: "Beauty LittleFish",
+    galleryLabel: "Gallery ảnh dự án Beauty LittleFish",
+    description:
+      "Beauty LittleFish là website thương mại điện tử mỹ phẩm, tập trung vào trải nghiệm mua sắm mượt mà, quản lý dữ liệu sản phẩm rõ ràng và tối ưu hiển thị trên công cụ tìm kiếm.",
+    features: [
+      "Đăng ký, đăng nhập, quên mật khẩu và quản lý tài khoản người dùng.",
+      "Hiển thị danh mục sản phẩm, chi tiết sản phẩm và biến thể sản phẩm.",
+      "Tìm kiếm, lọc, sắp xếp sản phẩm theo nhu cầu mua sắm.",
+      "Giỏ hàng, đặt hàng và theo dõi trạng thái đơn hàng.",
+      "Hệ thống đánh giá sản phẩm theo số sao, nội dung và hình ảnh.",
+      "Trang quản trị: quản lý sản phẩm, tồn kho, đơn hàng và nội dung.",
+      "Hỗ trợ khuyến mãi, voucher và logic giảm giá theo điều kiện.",
+      "Tối ưu SEO với slug thân thiện, metadata và sitemap.",
+    ],
+    technologies: [
+      "ASP.NET Core 8.0",
+      "Entity Framework Core",
+      "SQL Server",
+      "Razor Views",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "jQuery",
+      "Bootstrap",
+      "Google Analytics",
+      "Mailchimp",
+      "GitHub",
+    ],
+    images: [
+      "./images/LittleFish/126962031438264350512.jpg",
+      "./images/LittleFish/31361382703354435724.jpg",
+      "./images/LittleFish/31361382703354435727.jpg",
+      "./images/LittleFish/31361382703354435728.jpg",
+      "./images/LittleFish/37518677369967932841.jpg",
+      "./images/LittleFish/375186773699679328410.jpg",
+      "./images/LittleFish/375186773699679328411.jpg",
+      "./images/LittleFish/375186773699679328413.jpg",
+      "./images/LittleFish/37518677369967932842.jpg",
+      "./images/LittleFish/37518677369967932843.jpg",
+      "./images/LittleFish/37518677369967932845.jpg",
+      "./images/LittleFish/37518677369967932846.jpg",
+      "./images/LittleFish/37518677369967932849.jpg",
+    ],
+    imageAltPrefix: "Ảnh dự án LittleFish",
+  },
+  {
+    id: "m-task",
+    title: "MATA",
+    galleryLabel: "Gallery ảnh dự án MATA",
+    description:
+      "MATA là ứng dụng quản lý công việc theo mô hình Kanban, được xây dựng bằng HTML, CSS và JavaScript thuần. Dự án tập trung vào trải nghiệm kéo thả mượt mà, quản lý trạng thái rõ ràng trên client và lưu trữ dữ liệu cục bộ ổn định, phù hợp để sử dụng hằng ngày và demo năng lực frontend.",
+    features: [
+      "Bảng Kanban 3 cột: To Do, Doing, Done.",
+      "Kéo thả task giữa các cột bằng SortableJS.",
+      "Thêm task theo từng cột bằng nút cộng và modal popup.",
+      "Chỉnh sửa task trực tiếp với thao tác nhanh trên card.",
+      "Hoàn thành task để đẩy sang cột kế tiếp.",
+      "Nhân bản task tại cột To Do để tạo việc tương tự nhanh.",
+      "Lọc task theo từ khóa và mức độ ưu tiên.",
+      "Mô tả rich text với Bold, Italic, Underline, Bullet list, Numbered list.",
+      "Quản lý thời gian bắt đầu và kết thúc theo datetime.",
+      "Gán màu và tag để phân loại công việc trực quan.",
+      "Export/Import JSON để sao lưu và phục hồi dữ liệu.",
+      "Lưu trữ localStorage và hỗ trợ dark mode.",
+      "Chuẩn hóa dữ liệu cũ/mới và sanitize nội dung trước khi render.",
+    ],
+    technologies: [
+      "HTML5",
+      "CSS3",
+      "JavaScript (ES Modules)",
+      "SortableJS (CDN)",
+      "localStorage API",
+      "JSON Import/Export",
+      "GitHub",
+    ],
+    images: [
+      "./images/M-Task/d00153d9-3797-4b0e-b3c8-b344ded9a638.jpg",
+      "./images/M-Task/Screenshot 2026-04-19 165014.png",
+      "./images/M-Task/Screenshot 2026-04-19 165050.png",
+      "./images/M-Task/Screenshot 2026-04-19 165711.png",
+      "./images/M-Task/Screenshot 2026-04-19 165809.png",
+    ],
+    imageAltPrefix: "Ảnh dự án MATA",
+  },
+];
+
+let activeProjectIndex = 0;
 let activeLittleFishIndex = 0;
 let littleFishCards = [];
 let littleFishIndicators = [];
+let littleFishIndicatorsWrap = null;
 let littleFishLocked = false;
 let littleFishImages = [];
 let littleFishLightbox = null;
 let littleFishLightboxImage = null;
 let littleFishLightboxCounter = null;
 let littleFishLightboxIndex = 0;
+let projectStage = null;
+let projectInfoPanel = null;
+let projectGalleryPanel = null;
+let projectWrapper = null;
+let projectTitleEl = null;
+let activeImageByProject = {};
 let activeHangingBoard = null;
 let activeHangingBoardSide = null;
 let projectsRevealTriggered = false;
+let projectSwitchLocked = false;
 
 function normalizeIndex(index, length) {
+  if (!length) return 0;
   return (index + length) % length;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 }
 
 function refreshLittleFishIndicators() {
@@ -81,44 +189,10 @@ function paintLittleFishGallery() {
   refreshLittleFishIndicators();
 }
 
-function rotateLittleFish(direction) {
-  if (!littleFishCards.length || littleFishLocked) return;
-
-  const previousIndex = activeLittleFishIndex;
-  const total = littleFishCards.length;
-  activeLittleFishIndex = normalizeIndex(
-    activeLittleFishIndex + direction,
-    total,
-  );
-
-  const previousCard = littleFishCards[previousIndex];
-  const nextCard = littleFishCards[activeLittleFishIndex];
-
-  previousCard.classList.remove("flip-exit-left", "flip-exit-right");
-  nextCard.classList.remove("flip-enter-left", "flip-enter-right");
-
-  if (direction > 0) {
-    previousCard.classList.add("flip-exit-left");
-    nextCard.classList.add("flip-enter-right");
-  } else {
-    previousCard.classList.add("flip-exit-right");
-    nextCard.classList.add("flip-enter-left");
-  }
-
-  littleFishLocked = true;
-  paintLittleFishGallery();
-
-  setTimeout(() => {
-    littleFishCards.forEach((card) => {
-      card.classList.remove(
-        "flip-exit-left",
-        "flip-exit-right",
-        "flip-enter-left",
-        "flip-enter-right",
-      );
-    });
-    littleFishLocked = false;
-  }, 850);
+function persistActiveImageOfCurrentProject() {
+  const project = projectCatalog[activeProjectIndex];
+  if (!project) return;
+  activeImageByProject[project.id] = activeLittleFishIndex;
 }
 
 function jumpLittleFish(index) {
@@ -132,6 +206,7 @@ function jumpLittleFish(index) {
 
   const direction = index > activeLittleFishIndex ? 1 : -1;
   activeLittleFishIndex = normalizeIndex(index, littleFishCards.length);
+  persistActiveImageOfCurrentProject();
   paintLittleFishGallery();
 
   const activeCard = littleFishCards[activeLittleFishIndex];
@@ -146,15 +221,164 @@ function jumpLittleFish(index) {
   }, 850);
 }
 
+function renderImageIndicators() {
+  if (!littleFishIndicatorsWrap) return;
+
+  littleFishIndicatorsWrap.innerHTML = "";
+  littleFishIndicators = littleFishCards.map((_, i) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "carousel-indicator";
+    dot.setAttribute("aria-label", `Xem ảnh dự án ${i + 1}`);
+    dot.addEventListener("click", () => jumpLittleFish(i));
+    littleFishIndicatorsWrap.appendChild(dot);
+    return dot;
+  });
+}
+
+function bindCurrentGalleryToLightbox() {
+  littleFishImages = littleFishCards
+    .map((card) => card.querySelector("img"))
+    .filter(Boolean);
+
+  littleFishImages.forEach((image, i) => {
+    image.addEventListener("click", () => openLittleFishLightbox(i));
+  });
+}
+
+function buildProjectInfo(project) {
+  if (!projectInfoPanel) return;
+
+  const featureItems = project.features
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join("");
+
+  const techItems = project.technologies
+    .map((tech) => `<span class="skill-tag">${escapeHtml(tech)}</span>`)
+    .join("");
+
+  projectInfoPanel.innerHTML = `
+    <article class="lf-flag-card">
+      <h3>Mô tả dự án</h3>
+      <p>${escapeHtml(project.description)}</p>
+    </article>
+
+    <article class="lf-flag-card">
+      <h3>Chức năng chính</h3>
+      <ul>${featureItems}</ul>
+    </article>
+
+    <article class="lf-flag-card">
+      <h3>Công cụ và công nghệ sử dụng</h3>
+      <div class="lf-tech-badges">${techItems}</div>
+    </article>
+  `;
+}
+
+function buildProjectGallery(project) {
+  if (!projectStage) return;
+
+  projectStage.innerHTML = project.images
+    .map(
+      (src, index) => `
+      <figure class="lf-image-card" data-lf-index="${index}">
+        <img src="${src}" alt="${escapeHtml(project.imageAltPrefix)} ${index + 1}" />
+      </figure>
+    `,
+    )
+    .join("");
+
+  littleFishCards = Array.from(projectStage.querySelectorAll(".lf-image-card"));
+  const storedImageIndex = activeImageByProject[project.id] ?? 0;
+  activeLittleFishIndex = normalizeIndex(
+    storedImageIndex,
+    littleFishCards.length,
+  );
+
+  renderImageIndicators();
+  paintLittleFishGallery();
+  bindCurrentGalleryToLightbox();
+}
+
+function renderActiveProject() {
+  const project = projectCatalog[activeProjectIndex];
+  if (!project) return;
+
+  if (projectTitleEl) {
+    projectTitleEl.textContent = project.title;
+  }
+
+  if (projectGalleryPanel) {
+    projectGalleryPanel.setAttribute("aria-label", project.galleryLabel);
+  }
+
+  if (projectInfoPanel) {
+    projectInfoPanel.setAttribute(
+      "aria-label",
+      `Nội dung dự án ${project.title}`,
+    );
+  }
+
+  buildProjectGallery(project);
+  buildProjectInfo(project);
+  closeLittleFishLightbox();
+}
+
+function switchProject(direction) {
+  if (!projectCatalog.length || littleFishLocked || projectSwitchLocked) return;
+
+  const switchDuration = 840;
+  const halfDuration = Math.floor(switchDuration / 2);
+  const directionClass = direction > 0 ? "swap-next" : "swap-prev";
+
+  const completeSwitch = () => {
+    activeProjectIndex = normalizeIndex(
+      activeProjectIndex + direction,
+      projectCatalog.length,
+    );
+    renderActiveProject();
+  };
+
+  persistActiveImageOfCurrentProject();
+
+  if (!projectWrapper) {
+    completeSwitch();
+    return;
+  }
+
+  projectSwitchLocked = true;
+  projectWrapper.classList.remove(
+    "is-project-switching",
+    "swap-next",
+    "swap-prev",
+  );
+  void projectWrapper.offsetWidth;
+  projectWrapper.classList.add("is-project-switching", directionClass);
+
+  setTimeout(() => {
+    completeSwitch();
+  }, halfDuration);
+
+  setTimeout(() => {
+    projectWrapper.classList.remove(
+      "is-project-switching",
+      "swap-next",
+      "swap-prev",
+    );
+    projectSwitchLocked = false;
+  }, switchDuration);
+}
+
 function updateLittleFishLightbox() {
   if (!littleFishImages.length || !littleFishLightboxImage) return;
 
+  const currentProject = projectCatalog[activeProjectIndex];
   const currentImage = littleFishImages[littleFishLightboxIndex];
   littleFishLightboxImage.src = currentImage.src;
-  littleFishLightboxImage.alt = currentImage.alt || "Ảnh dự án LittleFish";
+  littleFishLightboxImage.alt = `${currentProject.title} - ảnh ${littleFishLightboxIndex + 1}`;
 
   if (littleFishLightboxCounter) {
-    littleFishLightboxCounter.textContent = `${littleFishLightboxIndex + 1} / ${littleFishImages.length}`;
+    littleFishLightboxCounter.textContent = `${currentProject.title} • ${littleFishLightboxIndex + 1} / ${littleFishImages.length}`;
   }
 }
 
@@ -186,6 +410,7 @@ function navigateLittleFishLightbox(direction) {
   updateLittleFishLightbox();
 
   activeLittleFishIndex = littleFishLightboxIndex;
+  persistActiveImageOfCurrentProject();
   paintLittleFishGallery();
 }
 
@@ -194,15 +419,7 @@ function setupLittleFishLightbox() {
   littleFishLightboxImage = document.getElementById("lfLightboxImage");
   littleFishLightboxCounter = document.getElementById("lfLightboxCounter");
 
-  if (!littleFishLightbox || !littleFishCards.length) return;
-
-  littleFishImages = littleFishCards
-    .map((card) => card.querySelector("img"))
-    .filter(Boolean);
-
-  littleFishImages.forEach((image, i) => {
-    image.addEventListener("click", () => openLittleFishLightbox(i));
-  });
+  if (!littleFishLightbox) return;
 
   const closeBtn = document.getElementById("lfLightboxClose");
   const prevBtn = document.getElementById("lfLightboxPrev");
@@ -249,36 +466,28 @@ function setupProjectCarousel() {
   const gallery = document.querySelector(".littlefish-gallery-panel");
   if (!gallery) return;
 
-  littleFishCards = Array.from(gallery.querySelectorAll(".lf-image-card"));
-  if (!littleFishCards.length) return;
+  projectWrapper = document.querySelector(".projects-wrapper");
+  projectGalleryPanel = gallery;
+  projectStage = gallery.querySelector("[data-project-stage]");
+  littleFishIndicatorsWrap = gallery.querySelector("[data-lf-indicators]");
+  projectTitleEl = gallery.querySelector("[data-project-title]");
+  projectInfoPanel = document.querySelector("[data-project-info]");
 
-  const prevBtn = gallery.querySelector("[data-lf-prev]");
-  const nextBtn = gallery.querySelector("[data-lf-next]");
-  const indicatorsWrap = gallery.querySelector("[data-lf-indicators]");
+  const prevBtn = gallery.querySelector("[data-project-prev]");
+  const nextBtn = gallery.querySelector("[data-project-next]");
 
-  if (indicatorsWrap) {
-    indicatorsWrap.innerHTML = "";
-    littleFishIndicators = littleFishCards.map((_, i) => {
-      const dot = document.createElement("button");
-      dot.type = "button";
-      dot.className = "carousel-indicator";
-      dot.setAttribute("aria-label", `Xem ảnh dự án ${i + 1}`);
-      dot.addEventListener("click", () => jumpLittleFish(i));
-      indicatorsWrap.appendChild(dot);
-      return dot;
-    });
-  }
+  if (!projectStage || !projectInfoPanel) return;
 
   if (prevBtn) {
-    prevBtn.addEventListener("click", () => rotateLittleFish(-1));
+    prevBtn.addEventListener("click", () => switchProject(-1));
   }
 
   if (nextBtn) {
-    nextBtn.addEventListener("click", () => rotateLittleFish(1));
+    nextBtn.addEventListener("click", () => switchProject(1));
   }
 
-  paintLittleFishGallery();
   setupLittleFishLightbox();
+  renderActiveProject();
 }
 
 function clearHangingBoardTilt() {
