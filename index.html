@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link rel="icon" type="image/svg+xml" href="./images/Favicon.svg" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="spring">
@@ -263,23 +264,45 @@
           <div class="projects-split-layout">
             <div class="littlefish-gallery-panel" aria-label="Carousel dự án">
               <div class="project-switch-header">
-                <span class="project-switch-label">Carousel dự án</span>
                 <h3 class="project-switch-title" data-project-title>
                   Beauty LittleFish
                 </h3>
+                <div
+                  class="project-switch-actions"
+                  aria-label="Điều hướng dự án"
+                >
+                  <button
+                    type="button"
+                    class="project-nav-btn prev"
+                    data-project-prev
+                    aria-label="Chuyển sang dự án trước"
+                  >
+                    <i class="fas fa-book-open"></i>
+                    Dự án trước
+                  </button>
+                  <button
+                    type="button"
+                    class="project-nav-btn next"
+                    data-project-next
+                    aria-label="Chuyển sang dự án kế tiếp"
+                  >
+                    Dự án kế tiếp
+                    <i class="fas fa-book-open"></i>
+                  </button>
+                </div>
               </div>
 
               <div class="littlefish-stage" data-project-stage></div>
 
               <div
                 class="project-carousel-controls"
-                aria-label="Điều hướng dự án"
+                aria-label="Điều hướng ảnh dự án"
               >
                 <button
                   type="button"
-                  class="carousel-nav prev"
-                  data-project-prev
-                  aria-label="Dự án trước"
+                  class="carousel-nav image-nav prev"
+                  data-image-prev
+                  aria-label="Ảnh trước"
                 >
                   <i class="fas fa-chevron-left"></i>
                 </button>
@@ -288,9 +311,9 @@
 
                 <button
                   type="button"
-                  class="carousel-nav next"
-                  data-project-next
-                  aria-label="Dự án kế tiếp"
+                  class="carousel-nav image-nav next"
+                  data-image-next
+                  aria-label="Ảnh kế tiếp"
                 >
                   <i class="fas fa-chevron-right"></i>
                 </button>

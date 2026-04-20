@@ -189,6 +189,61 @@ function paintLittleFishGallery() {
   refreshLittleFishIndicators();
 }
 
+function triggerLittleFishPeel(
+  direction,
+  previousIndex,
+  nextIndex,
+  duration = 780,
+) {
+  const previousCard = littleFishCards[previousIndex];
+  const nextCard = littleFishCards[nextIndex];
+
+  if (!previousCard || !nextCard) return;
+
+  const peelClasses = [
+    "peel-exit-left",
+    "peel-exit-right",
+    "peel-enter-left",
+    "peel-enter-right",
+  ];
+
+  littleFishCards.forEach((card) => card.classList.remove(...peelClasses));
+  void previousCard.offsetWidth;
+
+  if (direction > 0) {
+    previousCard.classList.add("peel-exit-left");
+    nextCard.classList.add("peel-enter-right");
+  } else {
+    previousCard.classList.add("peel-exit-right");
+    nextCard.classList.add("peel-enter-left");
+  }
+
+  setTimeout(() => {
+    previousCard.classList.remove(...peelClasses);
+    nextCard.classList.remove(...peelClasses);
+  }, duration);
+}
+
+function rotateLittleFish(direction) {
+  if (!littleFishCards.length || littleFishLocked) return;
+
+  const previousIndex = activeLittleFishIndex;
+  const total = littleFishCards.length;
+  activeLittleFishIndex = normalizeIndex(
+    activeLittleFishIndex + direction,
+    total,
+  );
+
+  persistActiveImageOfCurrentProject();
+  littleFishLocked = true;
+  paintLittleFishGallery();
+  triggerLittleFishPeel(direction, previousIndex, activeLittleFishIndex);
+
+  setTimeout(() => {
+    littleFishLocked = false;
+  }, 780);
+}
+
 function persistActiveImageOfCurrentProject() {
   const project = projectCatalog[activeProjectIndex];
   if (!project) return;
@@ -204,21 +259,17 @@ function jumpLittleFish(index) {
     return;
   }
 
+  const previousIndex = activeLittleFishIndex;
   const direction = index > activeLittleFishIndex ? 1 : -1;
   activeLittleFishIndex = normalizeIndex(index, littleFishCards.length);
   persistActiveImageOfCurrentProject();
   paintLittleFishGallery();
-
-  const activeCard = littleFishCards[activeLittleFishIndex];
-  activeCard.classList.add(
-    direction > 0 ? "flip-enter-right" : "flip-enter-left",
-  );
+  triggerLittleFishPeel(direction, previousIndex, activeLittleFishIndex);
 
   littleFishLocked = true;
   setTimeout(() => {
-    activeCard.classList.remove("flip-enter-right", "flip-enter-left");
     littleFishLocked = false;
-  }, 850);
+  }, 780);
 }
 
 function renderImageIndicators() {
@@ -327,9 +378,8 @@ function renderActiveProject() {
 function switchProject(direction) {
   if (!projectCatalog.length || littleFishLocked || projectSwitchLocked) return;
 
-  const switchDuration = 840;
-  const halfDuration = Math.floor(switchDuration / 2);
-  const directionClass = direction > 0 ? "swap-next" : "swap-prev";
+  const switchDuration = 780;
+  const swapAt = Math.floor(switchDuration * 0.45);
 
   const completeSwitch = () => {
     activeProjectIndex = normalizeIndex(
@@ -347,24 +397,16 @@ function switchProject(direction) {
   }
 
   projectSwitchLocked = true;
-  projectWrapper.classList.remove(
-    "is-project-switching",
-    "swap-next",
-    "swap-prev",
-  );
+  projectWrapper.classList.remove("is-project-changing");
   void projectWrapper.offsetWidth;
-  projectWrapper.classList.add("is-project-switching", directionClass);
+  projectWrapper.classList.add("is-project-changing");
 
   setTimeout(() => {
     completeSwitch();
-  }, halfDuration);
+  }, swapAt);
 
   setTimeout(() => {
-    projectWrapper.classList.remove(
-      "is-project-switching",
-      "swap-next",
-      "swap-prev",
-    );
+    projectWrapper.classList.remove("is-project-changing");
     projectSwitchLocked = false;
   }, switchDuration);
 }
@@ -475,6 +517,8 @@ function setupProjectCarousel() {
 
   const prevBtn = gallery.querySelector("[data-project-prev]");
   const nextBtn = gallery.querySelector("[data-project-next]");
+  const imagePrevBtn = gallery.querySelector("[data-image-prev]");
+  const imageNextBtn = gallery.querySelector("[data-image-next]");
 
   if (!projectStage || !projectInfoPanel) return;
 
@@ -484,6 +528,14 @@ function setupProjectCarousel() {
 
   if (nextBtn) {
     nextBtn.addEventListener("click", () => switchProject(1));
+  }
+
+  if (imagePrevBtn) {
+    imagePrevBtn.addEventListener("click", () => rotateLittleFish(-1));
+  }
+
+  if (imageNextBtn) {
+    imageNextBtn.addEventListener("click", () => rotateLittleFish(1));
   }
 
   setupLittleFishLightbox();
