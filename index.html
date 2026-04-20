@@ -267,6 +267,10 @@
                 <h3 class="project-switch-title" data-project-title>
                   Beauty LittleFish
                 </h3>
+              </div>
+
+              <div class="project-stage-wrap">
+                <div class="littlefish-stage" data-project-stage></div>
                 <div
                   class="project-switch-actions"
                   aria-label="Điều hướng dự án"
@@ -277,8 +281,7 @@
                     data-project-prev
                     aria-label="Chuyển sang dự án trước"
                   >
-                    <i class="fas fa-book-open"></i>
-                    Dự án trước
+                    <span aria-hidden="true">&lt;</span>
                   </button>
                   <button
                     type="button"
@@ -286,13 +289,10 @@
                     data-project-next
                     aria-label="Chuyển sang dự án kế tiếp"
                   >
-                    Dự án kế tiếp
-                    <i class="fas fa-book-open"></i>
+                    <span aria-hidden="true">&gt;</span>
                   </button>
                 </div>
               </div>
-
-              <div class="littlefish-stage" data-project-stage></div>
 
               <div
                 class="project-carousel-controls"
@@ -330,6 +330,28 @@
         </div>
       </div>
     </section>
+
+    <div
+      class="project-link-popup"
+      id="projectLinkPopup"
+      role="dialog"
+      aria-hidden="true"
+      aria-label="Liên kết dự án"
+    >
+      <p id="projectLinkPopupText"></p>
+      <div class="project-link-popup-actions">
+        <a
+          id="projectLinkPopupLink"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Mở dự án</a
+        >
+        <button type="button" id="projectLinkPopupClose" aria-label="Đóng">
+          Đóng
+        </button>
+      </div>
+    </div>
 
     <div class="lf-lightbox" id="lfLightbox" aria-hidden="true">
       <button

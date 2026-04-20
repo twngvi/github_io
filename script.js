@@ -76,23 +76,16 @@ const projectCatalog = [
   {
     id: "m-task",
     title: "MATA",
+    linkUrl: "https://twngvi.github.io/M-Task/",
     galleryLabel: "Gallery ảnh dự án MATA",
     description:
       "MATA là ứng dụng quản lý công việc theo mô hình Kanban, được xây dựng bằng HTML, CSS và JavaScript thuần. Dự án tập trung vào trải nghiệm kéo thả mượt mà, quản lý trạng thái rõ ràng trên client và lưu trữ dữ liệu cục bộ ổn định, phù hợp để sử dụng hằng ngày và demo năng lực frontend.",
     features: [
-      "Bảng Kanban 3 cột: To Do, Doing, Done.",
-      "Kéo thả task giữa các cột bằng SortableJS.",
-      "Thêm task theo từng cột bằng nút cộng và modal popup.",
-      "Chỉnh sửa task trực tiếp với thao tác nhanh trên card.",
-      "Hoàn thành task để đẩy sang cột kế tiếp.",
-      "Nhân bản task tại cột To Do để tạo việc tương tự nhanh.",
-      "Lọc task theo từ khóa và mức độ ưu tiên.",
-      "Mô tả rich text với Bold, Italic, Underline, Bullet list, Numbered list.",
-      "Quản lý thời gian bắt đầu và kết thúc theo datetime.",
-      "Gán màu và tag để phân loại công việc trực quan.",
-      "Export/Import JSON để sao lưu và phục hồi dữ liệu.",
-      "Lưu trữ localStorage và hỗ trợ dark mode.",
-      "Chuẩn hóa dữ liệu cũ/mới và sanitize nội dung trước khi render.",
+      "Xây dựng bảng Kanban 3 cột: To Do, Doing, Done.",
+      "Triển khai kéo thả task giữa các cột bằng SortableJS.",
+      "Phát triển chức năng thêm, sửa, hoàn thành và nhân bản task.",
+      "Tích hợp tìm kiếm, lọc ưu tiên, tag và dark mode.",
+      "Hỗ trợ import/export JSON và lưu trữ bằng localStorage.",
     ],
     technologies: [
       "HTML5",
@@ -130,6 +123,11 @@ let projectInfoPanel = null;
 let projectGalleryPanel = null;
 let projectWrapper = null;
 let projectTitleEl = null;
+let projectLinkPopup = null;
+let projectLinkPopupText = null;
+let projectLinkPopupLink = null;
+let projectLinkPopupCloseBtn = null;
+let projectPopupHideTimer = null;
 let activeImageByProject = {};
 let activeHangingBoard = null;
 let activeHangingBoardSide = null;
@@ -148,6 +146,54 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+function clearProjectPopupTimer() {
+  if (!projectPopupHideTimer) return;
+  clearTimeout(projectPopupHideTimer);
+  projectPopupHideTimer = null;
+}
+
+function closeProjectLinkPopup() {
+  if (!projectLinkPopup) return;
+  clearProjectPopupTimer();
+  projectLinkPopup.classList.remove("open");
+  projectLinkPopup.setAttribute("aria-hidden", "true");
+}
+
+function showProjectLinkPopup(project) {
+  if (!projectLinkPopup || !project?.linkUrl) return;
+
+  if (projectLinkPopupText) {
+    projectLinkPopupText.textContent = `${project.title} co ban chay thu online. Ban muon mo ngay khong?`;
+  }
+
+  if (projectLinkPopupLink) {
+    projectLinkPopupLink.href = project.linkUrl;
+  }
+
+  clearProjectPopupTimer();
+  projectLinkPopup.classList.add("open");
+  projectLinkPopup.setAttribute("aria-hidden", "false");
+
+  projectPopupHideTimer = setTimeout(() => {
+    closeProjectLinkPopup();
+  }, 7000);
+}
+
+function handleProjectTitleClick(event) {
+  const project = projectCatalog[activeProjectIndex];
+  if (!project?.linkUrl) return;
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  if (projectLinkPopup?.classList.contains("open")) {
+    closeProjectLinkPopup();
+    return;
+  }
+
+  showProjectLinkPopup(project);
 }
 
 function refreshLittleFishIndicators() {
@@ -357,6 +403,22 @@ function renderActiveProject() {
 
   if (projectTitleEl) {
     projectTitleEl.textContent = project.title;
+    const isLinkable = Boolean(project.linkUrl);
+    projectTitleEl.classList.toggle("is-linkable", isLinkable);
+
+    if (isLinkable) {
+      projectTitleEl.setAttribute("tabindex", "0");
+      projectTitleEl.setAttribute("aria-haspopup", "dialog");
+      projectTitleEl.setAttribute(
+        "aria-label",
+        `Mo popup lien ket du an ${project.title}`,
+      );
+    } else {
+      projectTitleEl.removeAttribute("tabindex");
+      projectTitleEl.removeAttribute("aria-haspopup");
+      projectTitleEl.removeAttribute("aria-label");
+      closeProjectLinkPopup();
+    }
   }
 
   if (projectGalleryPanel) {
@@ -382,6 +444,7 @@ function switchProject(direction) {
   const swapAt = Math.floor(switchDuration * 0.45);
 
   const completeSwitch = () => {
+    closeProjectLinkPopup();
     activeProjectIndex = normalizeIndex(
       activeProjectIndex + direction,
       projectCatalog.length,
@@ -514,6 +577,10 @@ function setupProjectCarousel() {
   littleFishIndicatorsWrap = gallery.querySelector("[data-lf-indicators]");
   projectTitleEl = gallery.querySelector("[data-project-title]");
   projectInfoPanel = document.querySelector("[data-project-info]");
+  projectLinkPopup = document.getElementById("projectLinkPopup");
+  projectLinkPopupText = document.getElementById("projectLinkPopupText");
+  projectLinkPopupLink = document.getElementById("projectLinkPopupLink");
+  projectLinkPopupCloseBtn = document.getElementById("projectLinkPopupClose");
 
   const prevBtn = gallery.querySelector("[data-project-prev]");
   const nextBtn = gallery.querySelector("[data-project-next]");
@@ -529,6 +596,47 @@ function setupProjectCarousel() {
   if (nextBtn) {
     nextBtn.addEventListener("click", () => switchProject(1));
   }
+
+  if (projectTitleEl) {
+    projectTitleEl.addEventListener("click", handleProjectTitleClick);
+    projectTitleEl.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        handleProjectTitleClick(event);
+      }
+    });
+  }
+
+  if (projectLinkPopupCloseBtn) {
+    projectLinkPopupCloseBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      closeProjectLinkPopup();
+    });
+  }
+
+  if (projectLinkPopup) {
+    projectLinkPopup.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+  }
+
+  if (projectLinkPopupLink) {
+    projectLinkPopupLink.addEventListener("click", () => {
+      closeProjectLinkPopup();
+    });
+  }
+
+  document.addEventListener("click", (event) => {
+    if (!projectLinkPopup?.classList.contains("open")) return;
+    if (projectTitleEl?.contains(event.target)) return;
+    if (projectLinkPopup.contains(event.target)) return;
+    closeProjectLinkPopup();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeProjectLinkPopup();
+    }
+  });
 
   if (imagePrevBtn) {
     imagePrevBtn.addEventListener("click", () => rotateLittleFish(-1));
