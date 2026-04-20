@@ -128,6 +128,11 @@ let projectLinkPopupText = null;
 let projectLinkPopupLink = null;
 let projectLinkPopupCloseBtn = null;
 let projectPopupHideTimer = null;
+let cvPreviewModal = null;
+let cvPreviewFrame = null;
+let cvPreviewTitle = null;
+let cvPreviewDownload = null;
+let cvPreviewCloseBtn = null;
 let activeImageByProject = {};
 let activeHangingBoard = null;
 let activeHangingBoardSide = null;
@@ -194,6 +199,71 @@ function handleProjectTitleClick(event) {
   }
 
   showProjectLinkPopup(project);
+}
+
+function closeCvPreviewModal() {
+  if (!cvPreviewModal) return;
+  cvPreviewModal.classList.remove("open");
+  cvPreviewModal.setAttribute("aria-hidden", "true");
+  if (cvPreviewFrame) {
+    cvPreviewFrame.src = "";
+  }
+  document.body.style.overflow = "";
+}
+
+function openCvPreviewModal(title, filePath) {
+  if (!cvPreviewModal || !cvPreviewFrame || !cvPreviewDownload || !filePath) {
+    return;
+  }
+
+  const safeUrl = encodeURI(filePath);
+  cvPreviewFrame.src = safeUrl;
+  cvPreviewDownload.href = safeUrl;
+  cvPreviewDownload.setAttribute("download", filePath.split("/").pop() || "cv.pdf");
+
+  if (cvPreviewTitle) {
+    cvPreviewTitle.textContent = `${title} - Preview`;
+  }
+
+  cvPreviewModal.classList.add("open");
+  cvPreviewModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function setupCvPreviewModal() {
+  cvPreviewModal = document.getElementById("cvPreviewModal");
+  cvPreviewFrame = document.getElementById("cvPreviewFrame");
+  cvPreviewTitle = document.getElementById("cvPreviewTitle");
+  cvPreviewDownload = document.getElementById("cvPreviewDownload");
+  cvPreviewCloseBtn = document.getElementById("cvPreviewClose");
+
+  const previewItems = document.querySelectorAll("[data-cv-preview]");
+
+  previewItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const title = item.getAttribute("data-cv-title") || "CV";
+      const filePath = item.getAttribute("data-cv-file") || "";
+      openCvPreviewModal(title, filePath);
+    });
+  });
+
+  if (cvPreviewCloseBtn) {
+    cvPreviewCloseBtn.addEventListener("click", closeCvPreviewModal);
+  }
+
+  if (cvPreviewModal) {
+    cvPreviewModal.addEventListener("click", (event) => {
+      if (event.target === cvPreviewModal) {
+        closeCvPreviewModal();
+      }
+    });
+  }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && cvPreviewModal?.classList.contains("open")) {
+      closeCvPreviewModal();
+    }
+  });
 }
 
 function refreshLittleFishIndicators() {
@@ -817,8 +887,8 @@ const animateOnScroll = () => {
     }
   });
 
-  // Animate Skill Categories
-  document.querySelectorAll(".skill-category").forEach((el) => {
+  // Animate Skills Stack
+  document.querySelectorAll(".skills-stack-board").forEach((el) => {
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight * 0.85 && rect.bottom > 0) {
       el.classList.add("visible");
@@ -970,6 +1040,7 @@ window.addEventListener("load", () => {
   // Start subtitle typing effect
   setTimeout(typeSubtitle, 1500);
 
+  setupCvPreviewModal();
   setupProjectCarousel();
   setupHangingBoardInteractions();
 });
