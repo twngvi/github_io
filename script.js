@@ -219,7 +219,10 @@ function openCvPreviewModal(title, filePath) {
   const safeUrl = encodeURI(filePath);
   cvPreviewFrame.src = safeUrl;
   cvPreviewDownload.href = safeUrl;
-  cvPreviewDownload.setAttribute("download", filePath.split("/").pop() || "cv.pdf");
+  cvPreviewDownload.setAttribute(
+    "download",
+    filePath.split("/").pop() || "cv.pdf",
+  );
 
   if (cvPreviewTitle) {
     cvPreviewTitle.textContent = `${title} - Preview`;

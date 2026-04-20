@@ -1449,7 +1449,11 @@ section {
 .cv-preview-dialog {
   width: min(1040px, 96vw);
   max-height: 92vh;
-  background: linear-gradient(160deg, var(--bg-card), rgba(238, 247, 238, 0.92));
+  background: linear-gradient(
+    160deg,
+    var(--bg-card),
+    rgba(238, 247, 238, 0.92)
+  );
   border: 2px solid rgba(47, 143, 87, 0.28);
   border-radius: 18px;
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28);
@@ -1464,7 +1468,11 @@ section {
   justify-content: space-between;
   gap: 14px;
   padding: 14px 16px;
-  background: linear-gradient(90deg, rgba(47, 143, 87, 0.13), rgba(31, 111, 67, 0.08));
+  background: linear-gradient(
+    90deg,
+    rgba(47, 143, 87, 0.13),
+    rgba(31, 111, 67, 0.08)
+  );
   border-bottom: 1px solid rgba(47, 143, 87, 0.22);
 }
 
