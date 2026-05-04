@@ -122,7 +122,10 @@
           <div class="education-content-panel">
             <div class="education-hanging-wrap">
               <div class="edu-hanging-stack">
-                <article class="hanging-board" tabindex="0">
+                <article
+                  class="hanging-board hanging-board-with-photo"
+                  tabindex="0"
+                >
                   <span
                     class="board-rope board-rope-left"
                     aria-hidden="true"
@@ -131,10 +134,23 @@
                     class="board-rope board-rope-right"
                     aria-hidden="true"
                   ></span>
+                  <button
+                    type="button"
+                    class="edu-board-preview"
+                    tabindex="-1"
+                    data-edu-preview
+                    data-edu-image="./images/Bảng điểm.png"
+                    data-edu-title="Ảnh hồ sơ Trương Tường Vi"
+                    aria-label="Xem ảnh hồ sơ Trương Tường Vi"
+                  >
+                    <img
+                      src="./images/Bảng điểm.png"
+                      alt="Ảnh hồ sơ Trương Tường Vi"
+                    />
+                    <span>Xem ảnh</span>
+                  </button>
                   <p class="board-line1">Đại học Nguyễn Tất Thành</p>
-                  <p class="board-line2">
-                    Kỹ sư Phần mềm - Khoa Công nghệ Thông tin
-                  </p>
+                  <p class="board-line2">Software Engineer Intern</p>
                   <p class="board-line3">
                     Niên khóa 2022 - 2026 | GPA: 3.8 / 4.0
                   </p>
@@ -200,10 +216,6 @@
           class="skills-stack-board"
           aria-label="Kỹ năng chuyên môn và kỹ năng mềm"
         >
-          <article class="skills-stack-tile is-technical">
-            <span class="skills-tile-label">Backend</span>
-            <p>Python</p>
-          </article>
           <article class="skills-stack-tile is-technical">
             <span class="skills-tile-label">Backend</span>
             <p>C++</p>
@@ -444,6 +456,7 @@
               class="contact-card cv-contact-card"
               data-cv-preview
               data-cv-title="CV English"
+              data-cv-locked="true"
               data-cv-file="./images/CV_TRƯƠNG_TƯỜNG_VI_EN.pdf"
             >
               <i class="fas fa-file-lines"></i>
@@ -478,6 +491,21 @@
             Tải xuống
           </a>
         </div>
+      </div>
+    </div>
+
+    <div class="edu-image-modal" id="eduImageModal" aria-hidden="true">
+      <div class="edu-image-dialog" role="dialog" aria-modal="true">
+        <button
+          type="button"
+          class="edu-image-close"
+          id="eduImageClose"
+          aria-label="Đóng ảnh"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+        <img id="eduImagePreview" src="" alt="Ảnh hồ sơ Trương Tường Vi" />
+        <p id="eduImageCaption">Ảnh hồ sơ Trương Tường Vi</p>
       </div>
     </div>
 

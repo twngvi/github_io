@@ -2377,6 +2377,61 @@ body.autumn::after {
     box-shadow 0.25s ease;
 }
 
+.hanging-board-with-photo {
+  padding-top: 18px;
+}
+
+.edu-board-preview {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: min(220px, 58vw);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translate(-50%, -100%) scale(0.94);
+  opacity: 0;
+  pointer-events: none;
+  cursor: zoom-in;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    filter 0.25s ease;
+  filter: drop-shadow(0 16px 26px rgba(15, 45, 24, 0.22));
+  z-index: 2;
+}
+
+.hanging-board-with-photo:hover .edu-board-preview,
+.hanging-board-with-photo:focus-within .edu-board-preview {
+  opacity: 1;
+  transform: translate(-50%, -100%) scale(1);
+  pointer-events: auto;
+}
+
+.edu-board-preview img {
+  display: block;
+  width: 100%;
+  border-radius: 18px;
+  border: 3px solid rgba(255, 255, 255, 0.92);
+  background: var(--bg-card);
+  box-shadow: 0 14px 30px rgba(15, 45, 24, 0.14);
+}
+
+.edu-board-preview span {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(18, 53, 31, 0.78);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
 .hanging-board.visible {
   opacity: 1;
   transform: translateY(0);
@@ -3491,6 +3546,77 @@ body.autumn::after {
 
 .lf-lightbox-close:hover,
 .lf-lightbox-nav:hover {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+.edu-image-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2300;
+  background: rgba(2, 6, 23, 0.88);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.edu-image-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.edu-image-dialog {
+  position: relative;
+  width: min(980px, 92vw);
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.edu-image-dialog img {
+  width: 100%;
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+}
+
+.edu-image-dialog p {
+  margin: 0;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.edu-image-close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: rgba(15, 23, 42, 0.78);
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edu-image-close:hover {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
   color: #fff;

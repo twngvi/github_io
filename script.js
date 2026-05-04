@@ -133,6 +133,10 @@ let cvPreviewFrame = null;
 let cvPreviewTitle = null;
 let cvPreviewDownload = null;
 let cvPreviewCloseBtn = null;
+let eduImageModal = null;
+let eduImagePreview = null;
+let eduImageCaption = null;
+let eduImageCloseBtn = null;
 let activeImageByProject = {};
 let activeHangingBoard = null;
 let activeHangingBoardSide = null;
@@ -175,6 +179,8 @@ function showProjectLinkPopup(project) {
 
   if (projectLinkPopupLink) {
     projectLinkPopupLink.href = project.linkUrl;
+    projectLinkPopupLink.hidden = false;
+    projectLinkPopupLink.textContent = "Mở dự án";
   }
 
   clearProjectPopupTimer();
@@ -184,6 +190,27 @@ function showProjectLinkPopup(project) {
   projectPopupHideTimer = setTimeout(() => {
     closeProjectLinkPopup();
   }, 7000);
+}
+
+function showCvLockedPopup() {
+  if (!projectLinkPopup) return;
+
+  if (projectLinkPopupText) {
+    projectLinkPopupText.textContent =
+      "CV tiếng Anh đang tạm khóa. Vui lòng xem CV tiếng Việt hoặc thử lại sau.";
+  }
+
+  if (projectLinkPopupLink) {
+    projectLinkPopupLink.hidden = true;
+  }
+
+  clearProjectPopupTimer();
+  projectLinkPopup.classList.add("open");
+  projectLinkPopup.setAttribute("aria-hidden", "false");
+
+  projectPopupHideTimer = setTimeout(() => {
+    closeProjectLinkPopup();
+  }, 3500);
 }
 
 function handleProjectTitleClick(event) {
@@ -244,6 +271,11 @@ function setupCvPreviewModal() {
 
   previewItems.forEach((item) => {
     item.addEventListener("click", () => {
+      if (item.getAttribute("data-cv-locked") === "true") {
+        showCvLockedPopup();
+        return;
+      }
+
       const title = item.getAttribute("data-cv-title") || "CV";
       const filePath = item.getAttribute("data-cv-file") || "";
       openCvPreviewModal(title, filePath);
@@ -558,6 +590,71 @@ function updateLittleFishLightbox() {
   if (littleFishLightboxCounter) {
     littleFishLightboxCounter.textContent = `${currentProject.title} • ${littleFishLightboxIndex + 1} / ${littleFishImages.length}`;
   }
+}
+
+function closeEduImageModal() {
+  if (!eduImageModal) return;
+
+  eduImageModal.classList.remove("open");
+  eduImageModal.setAttribute("aria-hidden", "true");
+
+  if (eduImagePreview) {
+    eduImagePreview.src = "";
+  }
+
+  document.body.style.overflow = "";
+}
+
+function openEduImageModal(imageSrc, caption) {
+  if (!eduImageModal || !eduImagePreview || !imageSrc) {
+    return;
+  }
+
+  const safeUrl = encodeURI(imageSrc);
+  eduImagePreview.src = safeUrl;
+
+  if (eduImageCaption) {
+    eduImageCaption.textContent = caption || "Ảnh hồ sơ Trương Tường Vi";
+  }
+
+  eduImageModal.classList.add("open");
+  eduImageModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function setupEducationImagePreview() {
+  eduImageModal = document.getElementById("eduImageModal");
+  eduImagePreview = document.getElementById("eduImagePreview");
+  eduImageCaption = document.getElementById("eduImageCaption");
+  eduImageCloseBtn = document.getElementById("eduImageClose");
+
+  const previewTriggers = document.querySelectorAll("[data-edu-preview]");
+
+  previewTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      const imageSrc = trigger.getAttribute("data-edu-image") || "";
+      const caption = trigger.getAttribute("data-edu-title") || "";
+      openEduImageModal(imageSrc, caption);
+    });
+  });
+
+  if (eduImageCloseBtn) {
+    eduImageCloseBtn.addEventListener("click", closeEduImageModal);
+  }
+
+  if (eduImageModal) {
+    eduImageModal.addEventListener("click", (event) => {
+      if (event.target === eduImageModal) {
+        closeEduImageModal();
+      }
+    });
+  }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && eduImageModal?.classList.contains("open")) {
+      closeEduImageModal();
+    }
+  });
 }
 
 function openLittleFishLightbox(index) {
@@ -949,7 +1046,7 @@ const animateOnScroll = () => {
 };
 
 // ===== TYPING EFFECT LOOP FOR SUBTITLE =====
-const subtitleText = "Web Developer Intern (Full-stack)";
+const subtitleText = "Software Engineer Intern";
 let subtitleIndex = 0;
 let isDeleting = false;
 let typingSpeed = 100;
@@ -1044,6 +1141,7 @@ window.addEventListener("load", () => {
   setTimeout(typeSubtitle, 1500);
 
   setupCvPreviewModal();
+  setupEducationImagePreview();
   setupProjectCarousel();
   setupHangingBoardInteractions();
 });
