@@ -105,6 +105,110 @@ const projectCatalog = [
     ],
     imageAltPrefix: "Ảnh dự án MATA",
   },
+  {
+    id: "terracode",
+    title: "TerraCode",
+    galleryLabel: "Gallery ảnh dự án TerraCode",
+    description:
+      "TerraCode - Hệ thống Học tập Thông minh dạng SPA với kiến trúc 2 tầng database, tích hợp AI cá nhân hóa lộ trình học tập.",
+    features: [
+      "Kiến trúc 2 tầng Database trên Google Sheets (Master & User DB).",
+      "SPA hoàn chỉnh với Galaxy Theme, 15+ trang giao diện responsive.",
+      "Tích hợp Gamification và AI Evaluation qua Gemini API.",
+      "Hệ thống Auth đầy đủ (OAuth, Email verification) và Admin Panel.",
+    ],
+    technologies: [
+      "Google Apps Script",
+      "Google Sheets",
+      "HTML",
+      "CSS",
+      "JavaScript (SPA)",
+      "Gemini AI API",
+      "Google OAuth 2.0",
+    ],
+    images: [
+      "./images/DOAN/4.2.2.Giao diện Landing Page của hệ thống TerraCode.png",
+      "./images/DOAN/4.2.2.Giao diện đăng ký tài khoản.png",
+      "./images/DOAN/4.2.2.Giao diện đăng nhập.png",
+      "./images/DOAN/4.2.2.Phụ lục Giao diện quên mật khẩu.png",
+      "./images/DOAN/4.2.2.Phụ lục Giao diện xác thực Email.png",
+      "./images/DOAN/4.2.2.Phụ lục Giao diện đặt lại mật khẩu.png",
+      "./images/DOAN/4.2.2.Phụ lục Thông báo đăng ký tài khoản thành công.png",
+      "./images/DOAN/4.2.2.Phụ lục Thông báo đăng nhập không thành công.png",
+      "./images/DOAN/4.3.2.Giao diện Dashboard của User.png",
+      "./images/DOAN/4.3.2.Giao diện chi tiết một khóa học.png",
+      "./images/DOAN/4.3.2.Giao diện danh sách chủ đề của khóa học.png",
+      "./images/DOAN/4.3.2.Giao diện danh sách khóa học.png",
+      "./images/DOAN/4.3.2.Giao diện tiếp tục khóa học đang học.png",
+      "./images/DOAN/4.3.2.Trạng thái chủ đề chưa mở khóa.png",
+      "./images/DOAN/4.3.2.Trạng thái chủ đề đã hoàn thành.png",
+      "./images/DOAN/4.3.3.Giao diện Flashcard.png",
+      "./images/DOAN/4.3.3.Giao diện nội dung bài học.png",
+      "./images/DOAN/4.3.3.Phụ lục Giao diện Mindmap của bài học.png",
+      "./images/DOAN/4.3.3.Phụ lục Giao diện tài nguyên hỗ trợ bài học.png",
+      "./images/DOAN/4.3.3.Phụ lục Trạng thái hoàn thành bài học.png",
+      "./images/DOAN/4.3.4.Giao diện Code Arrangement.png",
+      "./images/DOAN/4.3.4.Giao diện Code Playground.png",
+      "./images/DOAN/4.3.4.Giao diện làm Quiz.png",
+      "./images/DOAN/4.3.4.Giao diện trò chơi luyện tập.png",
+      "./images/DOAN/4.3.4.Phụ lục Giao diện Matching Game.png",
+      "./images/DOAN/4.3.4.Phụ lục Giao diện giải thích đáp án Quiz.png",
+      "./images/DOAN/4.3.4.Phụ lục Giao diện kết quả Quiz.png",
+      "./images/DOAN/4.3.4.Phụ lục Kết quả Code Arrangement.png",
+      "./images/DOAN/4.3.4.Phụ lục Kết quả Matching Game.png",
+      "./images/DOAN/4.3.4.Phụ lục Kết quả thực thi chương trình trong Code Playground.png",
+      "./images/DOAN/4.3.5. Phụ lục Giao diện thiết lập nhắc nhở học tập.png",
+      "./images/DOAN/4.3.5.Giao diện Pet và thông tin Gamification.png",
+      "./images/DOAN/4.3.5.Giao diện hồ sơ và thiết lập học tập.png",
+      "./images/DOAN/4.3.5.Phụ lục Giao diện chỉnh sửa hồ sơ.png",
+      "./images/DOAN/4.3.5.Phụ lục Giao diện thiết lập mục tiêu hằng ngày.png",
+      "./images/DOAN/4.3.5.Phụ lục Phụ lục Giao diện thay đổi mật khẩu.png",
+      "./images/DOAN/4.3.5.Phụ lục Thông báo lỗi chương trình trong Code Playground.png",
+      "./images/DOAN/4.4.2. Giao diện Dashboard quản trị.png",
+      "./images/DOAN/4.4.2.Giao diện thống kê người dùng và hoạt.png",
+      "./images/DOAN/4.4.2.Phụ lục Biểu đồ thống kê khóa học.png",
+      "./images/DOAN/4.4.2.Phụ lục Biểu đồ thống kê người dùng.png",
+      "./images/DOAN/4.4.2.Phụ lục Giao diện quản lý trạng thái tài khoản.png",
+      "./images/DOAN/4.4.2.Phụ lục Thống kê hiệu suất theo chủ đề.png",
+      "./images/DOAN/4.4.3.Giao diện cấu hình prerequisite cho chủ đề.png",
+      "./images/DOAN/4.4.3.Giao diện quản lý chủ đề.png",
+      "./images/DOAN/4.4.3.Giao diện quản lý khóa học và chủ đề.png",
+      "./images/DOAN/4.4.3.Giao diện quản lý nội dung bài học.png",
+      "./images/DOAN/4.4.3.Giao diện xem trước nội dung bài học trước khi xuất bản.png",
+      "./images/DOAN/4.4.3.Phụ lục Giao diện chỉnh sửa khóa học.png",
+      "./images/DOAN/4.4.3.Phụ lục Giao diện chỉnh sửa nội dung bài học.png",
+      "./images/DOAN/4.4.3.Phụ lục Giao diện cấu hình XP cho bài học.png",
+      "./images/DOAN/4.4.3.Phụ lục Giao diện liên kết tài liệu Google Docs.png",
+      "./images/DOAN/4.4.3.Phụ lục Giao diện tạo bài học mới.png",
+      "./images/DOAN/4.4.3.Phụ lục Giao diện tạo khóa học.png",
+      "./images/DOAN/4.4.3.Phụ lục Giao diện xuất bản nội dung bài học.png",
+      "./images/DOAN/4.4.4.Giao diện quản lý ngân hàng câu hỏi.png",
+      "./images/DOAN/4.4.4.Phụ lục Giao diện chỉnh sửa câu hỏi Quiz.png",
+      "./images/DOAN/4.4.4.Phụ lục Giao diện duyệt câu hỏi.png",
+      "./images/DOAN/4.4.4.Phụ lục Giao diện quản lý Code Arrangement.png",
+      "./images/DOAN/4.4.4.Phụ lục Giao diện quản lý Matching Game.png",
+      "./images/DOAN/4.4.4.Phụ lục Giao diện tạo bài Code Arrangement.png",
+      "./images/DOAN/4.4.4.Phụ lục Giao diện tạo câu hỏi Quiz.png",
+      "./images/DOAN/4.4.4.Phụ lục Giao diện tạo nội dung Matching Game.png",
+      "./images/DOAN/4.4.5.Giao diện tạo chủ đề.png",
+      "./images/DOAN/4.4.5.Giao diện tạo câu hỏi Quiz.png",
+      "./images/DOAN/4.4.5Giao diện chỉnh sửa nội dung bài học.png",
+      "./images/DOAN/4.5 Giao diện quản lý Gemini API Key.jpg",
+      "./images/DOAN/4.5.2.Giao diện AI tạo Mindmap.png",
+      "./images/DOAN/4.5.2.Giao diện AI tạo câu hỏi Quiz.png",
+      "./images/DOAN/4.5.2.Giao diện AI tạo nội dung Matching Game.png",
+      "./images/DOAN/4.5.2.Giao diện tạo câu hỏi Quiz bằng AI để làm lại câu sai.png",
+      "./images/DOAN/4.5.2.Thông báo kiểm tra Gemini API thành công.png",
+      "./images/DOAN/4.5.2.Thông báo lỗi Gemini API.png",
+      "./images/DOAN/4.6.1  Pet Management Interface for Admin.jpg",
+      "./images/DOAN/4.6.2.Cập nhật Daily Quest sau hoạt động học tập.png",
+      "./images/DOAN/4.6.2.Giao diện quản lý hình dạng Pet của Admin.png",
+      "./images/DOAN/4.6.2.Giao diện quản lý nền Pet của Admin.png",
+      "./images/DOAN/4.6.2.Giao diện quản lý phụ kiện Pet của Admin.png",
+      "./images/DOAN/4.6.2.Giao diện quản lý thức ăn Pet của Admin.jpg"
+    ],
+    imageAltPrefix: "Ảnh dự án TerraCode",
+  },
 ];
 
 let activeProjectIndex = 0;
@@ -302,9 +406,12 @@ function setupCvPreviewModal() {
 }
 
 function refreshLittleFishIndicators() {
-  littleFishIndicators.forEach((dot, i) => {
-    dot.classList.toggle("active", i === activeLittleFishIndex);
-  });
+  const counterEl = document.querySelector('[data-image-counter]');
+  if (counterEl && littleFishCards.length) {
+    const total = littleFishCards.length;
+    const current = activeLittleFishIndex + 1;
+    counterEl.textContent = `${String(current).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+  }
 }
 
 function paintLittleFishGallery() {
@@ -424,18 +531,7 @@ function jumpLittleFish(index) {
 }
 
 function renderImageIndicators() {
-  if (!littleFishIndicatorsWrap) return;
-
-  littleFishIndicatorsWrap.innerHTML = "";
-  littleFishIndicators = littleFishCards.map((_, i) => {
-    const dot = document.createElement("button");
-    dot.type = "button";
-    dot.className = "carousel-indicator";
-    dot.setAttribute("aria-label", `Xem ảnh dự án ${i + 1}`);
-    dot.addEventListener("click", () => jumpLittleFish(i));
-    littleFishIndicatorsWrap.appendChild(dot);
-    return dot;
-  });
+  refreshLittleFishIndicators();
 }
 
 function bindCurrentGalleryToLightbox() {
@@ -456,24 +552,35 @@ function buildProjectInfo(project) {
     .join("");
 
   const techItems = project.technologies
-    .map((tech) => `<span class="skill-tag">${escapeHtml(tech)}</span>`)
+    .map((tech) => `<span class="book-tech-tag">${escapeHtml(tech)}</span>`)
     .join("");
 
+  // Remove the old link popup logic and just embed it here if available
+  let linkHtml = "";
+  if (project.linkUrl) {
+    linkHtml = `<div class="book-project-links">
+      <a href="${project.linkUrl}" target="_blank" rel="noopener noreferrer" class="book-link-btn">
+        <i class="fas fa-external-link-alt"></i> Live Demo
+      </a>
+    </div>`;
+  }
+
   projectInfoPanel.innerHTML = `
-    <article class="lf-flag-card">
-      <h3>Mô tả dự án</h3>
+    <div class="book-info-section">
+      <h3><i class="far fa-file-alt"></i> Mô tả dự án</h3>
       <p>${escapeHtml(project.description)}</p>
-    </article>
+    </div>
 
-    <article class="lf-flag-card">
-      <h3>Chức năng chính</h3>
-      <ul>${featureItems}</ul>
-    </article>
+    <div class="book-info-section">
+      <h3><i class="fas fa-cog"></i> Chức năng chính</h3>
+      <ul class="book-features-list">${featureItems}</ul>
+    </div>
 
-    <article class="lf-flag-card">
-      <h3>Công cụ và công nghệ sử dụng</h3>
-      <div class="lf-tech-badges">${techItems}</div>
-    </article>
+    <div class="book-info-section">
+      <h3><i class="fas fa-code"></i> Công nghệ sử dụng</h3>
+      <div class="book-tech-badges">${techItems}</div>
+      ${linkHtml}
+    </div>
   `;
 }
 
@@ -508,22 +615,25 @@ function renderActiveProject() {
 
   if (projectTitleEl) {
     projectTitleEl.textContent = project.title;
-    const isLinkable = Boolean(project.linkUrl);
-    projectTitleEl.classList.toggle("is-linkable", isLinkable);
-
-    if (isLinkable) {
-      projectTitleEl.setAttribute("tabindex", "0");
-      projectTitleEl.setAttribute("aria-haspopup", "dialog");
-      projectTitleEl.setAttribute(
-        "aria-label",
-        `Mo popup lien ket du an ${project.title}`,
-      );
-    } else {
-      projectTitleEl.removeAttribute("tabindex");
-      projectTitleEl.removeAttribute("aria-haspopup");
-      projectTitleEl.removeAttribute("aria-label");
-      closeProjectLinkPopup();
-    }
+  }
+  
+  // Update project counters
+  const projectNumberEl = document.querySelector('[data-project-number]');
+  const projectCounterEl = document.querySelector('[data-project-counter]');
+  const ribbonEl = document.querySelector('[data-project-ribbon]');
+  
+  const totalProjects = projectCatalog.length;
+  const currentProjectNum = activeProjectIndex + 1;
+  const counterText = `${String(currentProjectNum).padStart(2, '0')} / ${String(totalProjects).padStart(2, '0')}`;
+  
+  if (projectNumberEl) {
+    projectNumberEl.textContent = `DỰ ÁN ${String(currentProjectNum).padStart(2, '0')}`;
+  }
+  if (projectCounterEl) {
+    projectCounterEl.textContent = counterText;
+  }
+  if (ribbonEl) {
+    ribbonEl.textContent = counterText;
   }
 
   if (projectGalleryPanel) {
@@ -545,8 +655,8 @@ function renderActiveProject() {
 function switchProject(direction) {
   if (!projectCatalog.length || littleFishLocked || projectSwitchLocked) return;
 
-  const switchDuration = 780;
-  const swapAt = Math.floor(switchDuration * 0.45);
+  const switchDuration = 600;
+  const swapAt = Math.floor(switchDuration * 0.50);
 
   const completeSwitch = () => {
     closeProjectLinkPopup();
@@ -565,16 +675,20 @@ function switchProject(direction) {
   }
 
   projectSwitchLocked = true;
-  projectWrapper.classList.remove("is-project-changing");
+  projectWrapper.classList.remove("is-project-changing-next", "is-project-changing-prev");
   void projectWrapper.offsetWidth;
-  projectWrapper.classList.add("is-project-changing");
+  if (direction > 0) {
+    projectWrapper.classList.add("is-project-changing-next");
+  } else {
+    projectWrapper.classList.add("is-project-changing-prev");
+  }
 
   setTimeout(() => {
     completeSwitch();
   }, swapAt);
 
   setTimeout(() => {
-    projectWrapper.classList.remove("is-project-changing");
+    projectWrapper.classList.remove("is-project-changing-next", "is-project-changing-prev");
     projectSwitchLocked = false;
   }, switchDuration);
 }
@@ -752,8 +866,8 @@ function setupProjectCarousel() {
   projectLinkPopupLink = document.getElementById("projectLinkPopupLink");
   projectLinkPopupCloseBtn = document.getElementById("projectLinkPopupClose");
 
-  const prevBtn = gallery.querySelector("[data-project-prev]");
-  const nextBtn = gallery.querySelector("[data-project-next]");
+  const prevBtn = projectWrapper.querySelector("[data-project-prev]");
+  const nextBtn = projectWrapper.querySelector("[data-project-next]");
   const imagePrevBtn = gallery.querySelector("[data-image-prev]");
   const imageNextBtn = gallery.querySelector("[data-image-next]");
 

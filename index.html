@@ -165,6 +165,20 @@
                     class="board-rope board-rope-right"
                     aria-hidden="true"
                   ></span>
+                  <p class="board-line1">ETS</p>
+                  <p class="board-line2">TOEIC Listening & Reading – 710/990</p>
+                  <p class="board-line3">Cấp năm 2026</p>
+                </article>
+
+                <article class="hanging-board" tabindex="0">
+                  <span
+                    class="board-rope board-rope-left"
+                    aria-hidden="true"
+                  ></span>
+                  <span
+                    class="board-rope board-rope-right"
+                    aria-hidden="true"
+                  ></span>
                   <p class="board-line1">Google</p>
                   <p class="board-line2">
                     Google IT Support Professional Certificate
@@ -202,19 +216,6 @@
                   <p class="board-line3">Cấp năm 2025</p>
                 </article>
 
-                <article class="hanging-board" tabindex="0">
-                  <span
-                    class="board-rope board-rope-left"
-                    aria-hidden="true"
-                  ></span>
-                  <span
-                    class="board-rope board-rope-right"
-                    aria-hidden="true"
-                  ></span>
-                  <p class="board-line1">ETS</p>
-                  <p class="board-line2">TOEIC Listening & Reading – 710/990</p>
-                  <p class="board-line3">Cấp năm 2026</p>
-                </article>
               </div>
             </div>
           </div>
@@ -298,73 +299,73 @@
     <!-- Projects Section -->
     <section id="projects">
       <div class="container">
-        <h2 class="section-title">Dự án</h2>
-        <div class="projects-wrapper">
-          <div class="projects-split-layout">
-            <div class="littlefish-gallery-panel" aria-label="Carousel dự án">
-              <div class="project-switch-header">
-                <h3 class="project-switch-title" data-project-title>
-                  Beauty LittleFish
-                </h3>
-              </div>
+        <div class="section-header text-center">
+          <h2 class="section-title">DANH SÁCH DỰ ÁN</h2>
 
-              <div class="project-stage-wrap">
-                <div class="littlefish-stage" data-project-stage></div>
-                <div
-                  class="project-switch-actions"
-                  aria-label="Điều hướng dự án"
-                >
-                  <button
-                    type="button"
-                    class="project-nav-btn prev"
-                    data-project-prev
-                    aria-label="Chuyển sang dự án trước"
-                  >
-                    <span aria-hidden="true">&lt;</span>
-                  </button>
-                  <button
-                    type="button"
-                    class="project-nav-btn next"
-                    data-project-next
-                    aria-label="Chuyển sang dự án kế tiếp"
-                  >
-                    <span aria-hidden="true">&gt;</span>
-                  </button>
+        </div>
+
+        <div class="projects-wrapper" id="projectsWrapper">
+          <div class="book-container">
+            
+            <!-- Left edge tab -->
+            <button class="book-tab book-tab-left" data-project-prev aria-label="Dự án trước">
+              <span class="tab-text">TRƯỚC</span>
+            </button>
+
+            <!-- Book pages wrapper -->
+            <div class="book-pages-wrap">
+              <div class="page-edges-left"></div>
+              
+              <!-- Left Page (Gallery) -->
+              <div class="book-page book-page-left littlefish-gallery-panel" aria-label="Carousel dự án">
+                <div class="page-inner">
+                  <div class="project-meta-header">
+                    <span class="project-number" data-project-number>DỰ ÁN 01</span>
+                    <span class="project-counter" data-project-counter>01 / 03</span>
+                  </div>
+                  
+                  <h3 class="project-switch-title" data-project-title>
+                    Beauty LittleFish
+                  </h3>
+                  
+                  <div class="project-stage-wrap">
+                    <div class="littlefish-stage" data-project-stage></div>
+                    <div class="image-zoom-hint"><i class="fas fa-search-plus"></i> Xem ảnh lớn</div>
+                  </div>
+                  
+                  <div class="image-controls">
+                    <button type="button" class="image-nav-btn prev" data-image-prev aria-label="Ảnh trước">
+                      <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="image-counter-wrap">
+                      <span class="image-counter" data-image-counter>01 / 13</span>
+                    </div>
+                    <button type="button" class="image-nav-btn next" data-image-next aria-label="Ảnh kế tiếp">
+                      <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <div
-                class="project-carousel-controls"
-                aria-label="Điều hướng ảnh dự án"
-              >
-                <button
-                  type="button"
-                  class="carousel-nav image-nav prev"
-                  data-image-prev
-                  aria-label="Ảnh trước"
-                >
-                  <i class="fas fa-chevron-left"></i>
-                </button>
+              <!-- Spine -->
+              <div class="book-spine"></div>
 
-                <div class="littlefish-indicators" data-lf-indicators></div>
-
-                <button
-                  type="button"
-                  class="carousel-nav image-nav next"
-                  data-image-next
-                  aria-label="Ảnh kế tiếp"
-                >
-                  <i class="fas fa-chevron-right"></i>
-                </button>
+              <!-- Right Page (Info) -->
+              <div class="book-page book-page-right littlefish-info-panel" aria-live="polite" aria-label="Nội dung dự án">
+                <div class="page-inner page-inner-right" data-project-info>
+                  <!-- Content injected via JS -->
+                </div>
               </div>
+              
+              <div class="page-edges-right"></div>
             </div>
 
-            <aside
-              class="littlefish-info-panel"
-              data-project-info
-              aria-live="polite"
-              aria-label="Nội dung dự án"
-            ></aside>
+            <!-- Right edge tab -->
+            <button class="book-tab book-tab-right" data-project-next aria-label="Dự án tiếp">
+              <span class="tab-text">SAU</span>
+            </button>
+            
+            <div class="bookmark-ribbon" data-project-ribbon>01 / 03</div>
           </div>
         </div>
       </div>
